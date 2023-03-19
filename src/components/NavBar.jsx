@@ -25,19 +25,19 @@ function NavBar() {
     <Navi id="nav" extend={extendNavbar}>
       <NavBarUL extend={extendNavbar}>
         <li>
-          <NavbarNavLink to="/adrian_mirabal/">Home</NavbarNavLink>
+          <NavbarNavLink to="/">Home</NavbarNavLink>
         </li>
         <li>
-          <NavbarA href="/adrian_mirabal/#about">About</NavbarA>
+          <NavbarA href="/#about">About</NavbarA>
         </li>
         <li>
-          <NavbarA href="/adrian_mirabal/#skills">Skills</NavbarA>
+          <NavbarA href="/#skills">Skills</NavbarA>
         </li>
         <li>
-          <NavbarNavLink to="/adrian_mirabal/works">Works</NavbarNavLink>
+          <NavbarNavLink to="/works">Works</NavbarNavLink>
         </li>
         <li>
-          <NavbarNavLink to="/adrian_mirabal/contact">Contact</NavbarNavLink>
+          <NavbarNavLink to="/contact">Contact</NavbarNavLink>
         </li>
         <ButtonNv
           extendNavbar={extendNavbar}
@@ -53,29 +53,19 @@ function NavBar() {
       {extendNavbar && (
         <ExtendedNavBarUL className="animate__animated animate__fadeInDown">
           <li>
-            <ExtendedNavbarNavLink to="/adrian_mirabal/">
-              Home
-            </ExtendedNavbarNavLink>
+            <ExtendedNavbarNavLink to="/">Home</ExtendedNavbarNavLink>
           </li>
           <li>
-            <ExtendedNavbarA href="/adrian_mirabal/#about">
-              About
-            </ExtendedNavbarA>
+            <ExtendedNavbarA href="/#about">About</ExtendedNavbarA>
           </li>
           <li>
-            <ExtendedNavbarA href="/adrian_mirabal/#skills">
-              Skills
-            </ExtendedNavbarA>
+            <ExtendedNavbarA href="/#skills">Skills</ExtendedNavbarA>
           </li>
           <li>
-            <ExtendedNavbarNavLink to="/adrian_mirabal/works">
-              Works
-            </ExtendedNavbarNavLink>
+            <ExtendedNavbarNavLink to="/works">Works</ExtendedNavbarNavLink>
           </li>
           <li>
-            <ExtendedNavbarNavLink to="/adrian_mirabal/contact">
-              Contact
-            </ExtendedNavbarNavLink>
+            <ExtendedNavbarNavLink to="/contact">Contact</ExtendedNavbarNavLink>
           </li>
         </ExtendedNavBarUL>
       )}
