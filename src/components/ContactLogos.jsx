@@ -10,14 +10,16 @@ function ContactLogos() {
           If you prefer a more direct contact, you can write to me on some of my
           social media platforms:
         </h3>
-        {Data.map((data) => (
-          <LogoDiv key={data.id}>
-            <a href={data.url} target="_blank">
-              <Logos src={data.imagen} alt={data.alt} />
-            </a>
-            <p>{data.title}</p>
-          </LogoDiv>
-        ))}
+        <div>
+          {Data.map((data) => (
+            <LogoDiv key={data.id}>
+              <a href={data.url} target="_blank">
+                <Logos src={data.imagen} alt={data.alt} />
+              </a>
+              <p>{data.title}</p>
+            </LogoDiv>
+          ))}
+        </div>
       </div>
       <div className="wrapper">
         <h3>Or maybe take a cofee!</h3>

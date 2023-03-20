@@ -50,6 +50,7 @@ export const RowDIv = styled.div`
   }
 
   @media (max-width: 1000px) {
+    flex-direction: column;
     h2 {
       font-size: medium;
     }
@@ -64,6 +65,9 @@ export const MediaDiv = styled.div`
   .wrapper {
     width: 40%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   iframe {
@@ -77,9 +81,14 @@ export const MediaDiv = styled.div`
     flex-direction: column;
 
     .wrapper {
-      width: 60%;
-      text-align: center;
+      width: 80%;
+      text-align: left;
       margin: 0 auto;
+    }
+  }
+  @media (max-width: 700px) {
+    .wrapper {
+      width: 100%;
     }
   }
 `;

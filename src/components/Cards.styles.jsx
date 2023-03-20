@@ -4,7 +4,7 @@ export const Imagen = styled.img`
   width: 80px;
 
   @media (max-width: 700px) {
-    width: 30px;
+    width: 40px;
   }
 `;
 
