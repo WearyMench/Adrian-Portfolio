@@ -57,6 +57,8 @@ export const CardDiv = styled.div`
   border-radius: 10px;
 
   iframe {
+    width: 300px;
+    height: 150px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom: 3px solid gray;
@@ -87,7 +89,7 @@ export const CardDiv = styled.div`
   }
 
   .logo {
-    width: 40px;
+    width: 30px;
     filter: invert(1);
   }
 `;

@@ -19,7 +19,8 @@ export const Data = [
     id: 2,
     title: "Twitter: @adrMir07",
     url: "https://twitter.com/adrMir07",
-    imagen: "https://cdn.cdnlogo.com/logos/t/96/twitter-icon.svg",
+    imagen:
+      "https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-twitter-social-media-round-icon-png-image_6315985.png",
     alt: "Twitter Logo",
   },
   {
@@ -35,7 +36,7 @@ export const Data = [
     title: "Discord: adr07#9601",
     url: "https://discord.com/",
     imagen:
-      "https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png",
+      "https://static.vecteezy.com/system/resources/previews/018/930/718/original/discord-logo-discord-icon-transparent-free-png.png",
     alt: "Discord Logo",
   },
 ];

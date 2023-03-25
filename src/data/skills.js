@@ -75,7 +75,7 @@ export const Skills = [
     id: 13,
     title: "C#",
     imagen:
-      "https://cdn.icon-icons.com/icons2/2415/PNG/512/csharp_original_logo_icon_146578.png",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
   },
   {
     id: 14,
