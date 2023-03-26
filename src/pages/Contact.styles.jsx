@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 60%;
   margin: 100px auto;
+  font-family: sans-serif;
 
   a {
     display: block;

@@ -26,6 +26,10 @@ export const NavBarUL = styled.ul`
   flex-direction: row;
   justify-content: end;
   gap: ${(props) => (props.extend ? "0px" : "30px")};
+
+  @media (min-width: 1800px) {
+    font-size: 22px;
+  }
 `;
 export const ExtendedNavBarUL = styled.ul`
   list-style: none;

@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
 export const Text = styled.p`
   grid-area: text;
   text-align: center;
+
+  @media (min-width: 1800px) {
+    font-size: 20px;
+  }
 `;
 
 export const Arrow = styled.button`
@@ -38,5 +42,10 @@ export const Arrow = styled.button`
 
   &:hover {
     border: 2px solid #00b2df;
+  }
+
+  @media (min-width: 1800px) {
+    width: 50px;
+    padding: 8px;
   }
 `;

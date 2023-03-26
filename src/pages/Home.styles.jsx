@@ -9,6 +9,12 @@ export const HomeWrapper = styled.div`
   margin-top: 12%;
   margin-bottom: 230px;
 
+  @media (min-width: 1800px) {
+    height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
+
   @media (max-width: 1200px) {
     gap: 120px;
     height: 70vh;
@@ -29,12 +35,19 @@ export const HomeWrapper = styled.div`
 export const Title = styled.h1`
   font-size: 40px;
   color: white;
+
+  @media (min-width: 1800px) {
+    font-size: 60px;
+  }
+
+  @media (max-width: 300px) and (max-height: 200px) {
+    font-size: 25px;
+  }
 `;
 
 export const Span = styled.span`
   display: block;
   color: #00b2df;
-  font-family: "Tilt Prism";
 `;
 
 const rotate = keyframes`
@@ -51,12 +64,20 @@ export const Image = styled.img`
   width: 450px;
   border-radius: 30%;
 
+  @media (min-width: 1800px) {
+    width: 500px;
+  }
+
   @media (max-width: 920px) {
     width: 300px;
   }
 
   @media (max-width: 700px) {
     width: 200px;
+  }
+
+  @media (max-width: 300px) and (max-height: 200px) {
+    display: none;
   }
 `;
 
@@ -67,6 +88,10 @@ export const Blob = styled.img`
   top: 140px;
   z-index: -1;
 
+  @media (min-width: 1800px) {
+    width: 480px;
+    top: 240px;
+  }
   @media (max-width: 1200px) {
     top: 190px;
   }
@@ -99,6 +124,10 @@ export const Blob = styled.img`
   @media (max-width: 380px) and (max-height: 680px) {
     margin-top: 46%;
   }
+
+  @media (max-width: 300px) and (max-height: 200px) {
+    display: none;
+  }
 `;
 
 export const AboutWrapper = styled.div`
@@ -106,6 +135,11 @@ export const AboutWrapper = styled.div`
   padding-top: 50px;
   padding-bottom: 130px;
   background-color: #3d3c3cc2;
+
+  @media (min-width: 1800px) {
+    padding-top: 50px;
+    padding-bottom: 150px;
+  }
 
   @media (max-width: 700px) {
     padding-top: 25px;

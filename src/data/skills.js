@@ -1,4 +1,4 @@
-export const Skills = [
+export const skillsData = [
   {
     id: 0,
     title: "HTML5",
@@ -31,7 +31,7 @@ export const Skills = [
     id: 5,
     title: "Javascript",
     imagen:
-      "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/800px-JavaScript-logo.png",
   },
   {
     id: 6,
@@ -54,7 +54,7 @@ export const Skills = [
     id: 9,
     title: "Styled Components",
     imagen:
-      "https://miro.medium.com/v2/resize:fit:318/1*7jRD5QhgARucFKvRHFxpOg.png",
+      "https://www.daggala.com/static/228867c3668e439101821568a8a03b54/19ca5/sc.png",
   },
   {
     id: 10,
@@ -73,13 +73,30 @@ export const Skills = [
   },
   {
     id: 13,
+    title: "Redux",
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png",
+  },
+  {
+    id: 14,
+    title: "Node.js",
+    imagen:
+      "https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png",
+  },
+  {
+    id: 15,
     title: "C#",
     imagen:
       "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
   },
   {
-    id: 14,
+    id: 16,
     title: "MySQL",
     imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
+  },
+  {
+    id: 17,
+    title: "ASP.NET",
+    imagen:
+      "https://www.programandoamedianoche.com/wp-content/uploads/2008/09/asp.net_.logo_.png",
   },
 ];

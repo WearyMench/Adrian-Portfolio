@@ -20,4 +20,8 @@ export const Logo = styled.img`
   width: 30px;
   margin: 10px;
   filter: invert(1);
+
+  @media (min-width: 1800px) {
+    width: 45px;
+  }
 `;

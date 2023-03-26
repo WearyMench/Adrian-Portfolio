@@ -11,6 +11,10 @@ export const Presentation = styled.div`
   align-items: center;
   gap: 20px;
 
+  @media (min-width: 1800px) {
+    font-size: 22px;
+  }
+
   @media (max-width: 800px) {
     flex-direction: column;
   }
@@ -19,6 +23,10 @@ export const Presentation = styled.div`
 export const MyPhoto = styled.img`
   width: 400px;
   border-radius: 5px;
+
+  @media (min-width: 1800px) {
+    width: 600px;
+  }
 
   @media (max-width: 700px) {
     width: 150px;
