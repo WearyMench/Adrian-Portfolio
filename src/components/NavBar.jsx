@@ -45,9 +45,9 @@ function NavBar() {
             setExtendNavbar((curr) => !curr);
           }}
         >
-          <span class="line"></span>
-          <span class="line"></span>
-          <span class="line"></span>
+          <span className="line"></span>
+          <span className="line"></span>
+          <span className="line"></span>
         </ButtonNv>
       </NavBarUL>
       {extendNavbar && (

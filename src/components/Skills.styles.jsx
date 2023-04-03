@@ -7,13 +7,14 @@ export const Container = styled.div`
   .carousel {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 10px;
-    margin-top: 80px;
-    overflow: hidden;
+    margin-top: 50px;
+    overflow: scroll;
     font-family: sans-serif;
+  }
+
+  .carousel::-webkit-scrollbar {
+    width: 1px;
   }
 
   .carousel-slide {
@@ -21,6 +22,8 @@ export const Container = styled.div`
     background-color: #80808088;
     text-align: center;
     padding: 10px;
+    width: 120px;
+    height: 120px;
   }
 
   img {
@@ -29,6 +32,7 @@ export const Container = styled.div`
 
   @media (min-width: 1800px) {
     .carousel-slide {
+      width: 200px;
       height: 160px;
     }
     img {
@@ -40,10 +44,10 @@ export const Container = styled.div`
   }
 
   @media (max-width: 700px) {
-    width: 95%;
+    width: 85%;
 
     .carousel-slide {
-      padding: 20px;
+      padding: 15px;
     }
 
     img {

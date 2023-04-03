@@ -12,7 +12,7 @@ function About() {
         <div>
           <p>
             My name is Adrian Mirabal and I am originally from Santo Domingo.
-            Currently, I am studying software development and have been
+            Currently, I am studying systems engineering and have been
             self-learning web development for the past year. During this time, I
             have worked on various projects to showcase my knowledge and skills
             in this field.

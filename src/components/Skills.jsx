@@ -1,57 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { Container } from "./Skills.styles";
 
 import { skillsData } from "../data/skills";
 
-import { motion, AnimatePresence } from "framer-motion";
-
 function Skills() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slidesToShow = 6;
+  const carouselRef1 = useRef(null);
+  const carouselRef2 = useRef(null);
 
   useEffect(() => {
-    const intervalID = setInterval(() => {
-      setCurrentSlide((prevIndex) => {
-        const lastIndex = skillsData.length - slidesToShow;
-        const nextIndex =
-          prevIndex + slidesToShow > lastIndex ? 0 : prevIndex + slidesToShow;
-        return nextIndex;
-      });
-    }, 5000);
+    const intervalId = setInterval(() => {
+      // Calcula la nueva posición de scroll
+      const newScrollPosition1 =
+        carouselRef1.current.scrollLeft + carouselRef1.current.offsetWidth;
+      const newScrollPosition2 =
+        carouselRef2.current.scrollLeft + carouselRef2.current.offsetWidth;
 
-    return () => {
-      clearInterval(intervalID);
-    };
-  }, [skillsData]);
+      // Realiza la animación de scroll
+      if (newScrollPosition1 < carouselRef1.current.scrollWidth) {
+        carouselRef1.current.scrollTo({
+          left: newScrollPosition1,
+          behavior: "smooth",
+        });
+      } else {
+        carouselRef1.current.scrollTo({ left: 0, behavior: "smooth" });
+      }
+      if (newScrollPosition2 < carouselRef2.current.scrollWidth) {
+        carouselRef2.current.scrollTo({
+          left: newScrollPosition2,
+          behavior: "smooth",
+        });
+      } else {
+        carouselRef2.current.scrollTo({ left: 0, behavior: "smooth" });
+      }
+    }, 3000);
 
-  const slidesToDisplay = skillsData.slice(
-    currentSlide,
-    currentSlide + slidesToShow
-  );
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <Container>
       <h1 id="skills">My skills:</h1>
-      {/* Hacer un juego con las cartas que cuando hagan click se rompa la carta como si fuera vidrio o una botella y las demas ocupan su espacio
-      de forma horizontal, y luego vuelve a salir la que se rompio al final de la fila y asi sucesivamente mientras vayan rompiendo las cartas de vidrio */}
-      {/* <Cards /> */}
-      <div className="carousel">
-        {slidesToDisplay.map((slide) => (
-          <motion.div
-            key={slide.id}
-            className={`carousel-slide`}
-            style={{ width: `${100 / slidesToShow}%` }}
-            initial={{ opacity: 0, translateX: -1000 }}
-            animate={{ opacity: 1, translateX: 0 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <img src={slide.imagen} alt={slide.title} />
-            <h4>{slide.title}</h4>
-          </motion.div>
-        ))}
+
+      <div>
+        <div className="carousel" ref={carouselRef1}>
+          {skillsData.slice(0, 10).map((skill, index) => (
+            <div key={index} className={`carousel-slide`}>
+              <img src={skill.imagen} alt={skill.title} />
+              <h4>{skill.title}</h4>
+            </div>
+          ))}
+        </div>
+
+        <div className="carousel" ref={carouselRef2}>
+          {skillsData.slice(10, 20).map((skill, index) => (
+            <div key={index} className={`carousel-slide`}>
+              <img src={skill.imagen} alt={skill.title} />
+              <h4>{skill.title}</h4>
+            </div>
+          ))}
+        </div>
       </div>
     </Container>
   );

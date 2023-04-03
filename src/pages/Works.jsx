@@ -43,8 +43,8 @@ function Works() {
         </div>
         <hr />
         <div className="cards-container">
-          {sortProjects.map((project) => (
-            <CardDiv key={project.id}>
+          {sortProjects.map((project, index) => (
+            <CardDiv key={index}>
               <iframe src={project.urlPage} loading="eager"></iframe>
               <div className="card-body">
                 <h4>{project.title}</h4>

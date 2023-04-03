@@ -11,8 +11,8 @@ function ContactLogos() {
           social media platforms:
         </h3>
         <div>
-          {Data.map((data) => (
-            <LogoDiv key={data.id}>
+          {Data.map((data, index) => (
+            <LogoDiv key={index}>
               <a href={data.url} target="_blank">
                 <Logos src={data.imagen} alt={data.alt} />
               </a>
