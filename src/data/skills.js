@@ -65,7 +65,7 @@ export const skillsData = [
   {
     title: "Node.js",
     imagen:
-      "https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png",
   },
   {
     title: "Express JS",
@@ -83,7 +83,6 @@ export const skillsData = [
   },
   {
     title: "ASP.NET",
-    imagen:
-      "https://www.programandoamedianoche.com/wp-content/uploads/2008/09/asp.net_.logo_.png",
+    imagen: "https://colaninfotech.com/wp-content/uploads/2020/12/netlogos.png",
   },
 ];
