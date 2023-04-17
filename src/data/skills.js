@@ -82,7 +82,8 @@ export const skillsData = [
     imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
   },
   {
-    title: "ASP.NET",
-    imagen: "https://colaninfotech.com/wp-content/uploads/2020/12/netlogos.png",
+    title: ".NET",
+    imagen:
+      "https://logos-download.com/wp-content/uploads/2017/07/Microsoft_.NET_logo.png",
   },
 ];

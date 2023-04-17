@@ -31,7 +31,7 @@ export const Data = [
     title: "Discord: adr07#9601",
     url: "https://discord.com/",
     imagen:
-      "https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png",
+      "https://logodownload.org/wp-content/uploads/2017/11/discord-logo-1-1.png",
     alt: "Discord Logo",
   },
 ];
