@@ -47,10 +47,6 @@ export const skillsData = [
       "https://www.daggala.com/static/228867c3668e439101821568a8a03b54/19ca5/sc.png",
   },
   {
-    title: "Material UI",
-    imagen: "https://mui.com/static/logo.png",
-  },
-  {
     title: "React Router",
     imagen: "https://reactrouter.com/_brand/react-router-mark-color.png",
   },
@@ -59,8 +55,16 @@ export const skillsData = [
     imagen: "https://tsh.io/wp-content/uploads/2023/02/zustand-logo.png",
   },
   {
-    title: "Redux",
-    imagen: "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png",
+    title: "Python",
+    imagen: "https://pluspng.com/img-png/python-logo-png-open-2000.png",
+  },
+  {
+    title: "MongoDB",
+    imagen: "https://pluspng.com/img-png/logo-mongodb-png-mongodb-logo-png-400.png",
+  },
+  {
+    title: "MySQL",
+    imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
   },
   {
     title: "Node.js",
@@ -77,13 +81,10 @@ export const skillsData = [
     imagen:
       "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
   },
-  {
-    title: "MySQL",
-    imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
-  },
+  
   {
     title: ".NET",
     imagen:
-      "https://logos-download.com/wp-content/uploads/2017/07/Microsoft_.NET_logo.png",
+      "https://accrobiz.com/wp-content/uploads/elementor/thumbs/dotnet-orjvq1z44ch39sph4zhlno3narvf51snenjzvdayu4.png",
   },
 ];
