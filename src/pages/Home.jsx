@@ -31,7 +31,7 @@ function Home() {
             My name is
             <Span>Adrian Mirabal</Span>
           </Title>
-          <p>I'm a Front End Developer</p>
+          <p>I'm a Web Developer</p>
         </div>
         <div>
           <Blob src={blob} alt="Blob" />

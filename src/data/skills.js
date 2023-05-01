@@ -59,6 +59,10 @@ export const skillsData = [
     imagen: "https://pluspng.com/img-png/python-logo-png-open-2000.png",
   },
   {
+    title: "Django",
+    imagen: "https://john-bagiliko.github.io/images/logos/django.png",
+  },
+  {
     title: "MongoDB",
     imagen: "https://pluspng.com/img-png/logo-mongodb-png-mongodb-logo-png-400.png",
   },
@@ -72,9 +76,9 @@ export const skillsData = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png",
   },
   {
-    title: "Express JS",
+    title: "PHP",
     imagen:
-      "https://youteam.io/blog/wp-content/uploads/2022/04/expressjs_logo.png",
+      "https://qwebmaster.com/wp-content/uploads/2015/12/php-logo-1000x1000.png",
   },
   {
     title: "C#",
