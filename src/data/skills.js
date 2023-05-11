@@ -71,14 +71,14 @@ export const skillsData = [
     imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
   },
   {
+    title: "SQLite",
+    imagen:
+      "https://download.logo.wine/logo/SQLite/SQLite-Logo.wine.png",
+  },
+  {
     title: "Node.js",
     imagen:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png",
-  },
-  {
-    title: "PHP",
-    imagen:
-      "https://qwebmaster.com/wp-content/uploads/2015/12/php-logo-1000x1000.png",
   },
   {
     title: "C#",
