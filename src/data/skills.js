@@ -63,19 +63,6 @@ export const skillsData = [
     imagen: "https://john-bagiliko.github.io/images/logos/django.png",
   },
   {
-    title: "MongoDB",
-    imagen: "https://pluspng.com/img-png/logo-mongodb-png-mongodb-logo-png-400.png",
-  },
-  {
-    title: "MySQL",
-    imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
-  },
-  {
-    title: "SQLite",
-    imagen:
-      "https://download.logo.wine/logo/SQLite/SQLite-Logo.wine.png",
-  },
-  {
     title: "Node.js",
     imagen:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png",
@@ -90,5 +77,18 @@ export const skillsData = [
     title: ".NET",
     imagen:
       "https://accrobiz.com/wp-content/uploads/elementor/thumbs/dotnet-orjvq1z44ch39sph4zhlno3narvf51snenjzvdayu4.png",
+  },
+  {
+    title: "MongoDB",
+    imagen: "https://pluspng.com/img-png/logo-mongodb-png-mongodb-logo-png-400.png",
+  },
+  {
+    title: "MySQL",
+    imagen: "https://1000marcas.net/wp-content/uploads/2020/11/MySQL-logo.png",
+  },
+  {
+    title: "SQLite",
+    imagen:
+      "https://download.logo.wine/logo/SQLite/SQLite-Logo.wine.png",
   },
 ];

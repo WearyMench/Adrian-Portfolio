@@ -1,10 +1,10 @@
 export const Tags = [
   "all",
-  "css",
   "react",
   "javascript",
   "typescript",
-  "styled-components",
+  ".net",
+  "django"
 ];
 
 export const Projects = [
@@ -13,7 +13,7 @@ export const Projects = [
     description: "My personal Portfolio",
     urlCode: "https://github.com/WearyMench/Adrian-Portfolio",
     urlPage: "https://adrmir.netlify.app/",
-    tags: ["react", "javascript", "styled-components"],
+    tags: ["react", "styled-components"],
   },
   {
     title: "Witch Mini Game",
@@ -27,7 +27,7 @@ export const Projects = [
     description: "Pokedex using the pokeApi and react",
     urlCode: "https://github.com/WearyMench/Pokedex",
     urlPage: "https://wearymench.github.io/Pokedex/",
-    tags: ["css", "react", "javascript"],
+    tags: ["css", "react"],
   },
   {
     title: "Platform Game",
@@ -41,13 +41,27 @@ export const Projects = [
     description: "Tic tac toe game made with react",
     urlCode: "https://github.com/WearyMench/tic-tac-toe",
     urlPage: "https://wearymench.github.io/tic-tac-toe/",
-    tags: ["css", "react", "javascript"],
+    tags: ["css", "react"],
   },
   {
     title: "Quiz Game",
-    description: "Quiz Game with typescript and react",
+    description: "Quiz Game with typescript and react using Open Trivia DB",
     urlCode: "https://github.com/WearyMench/quiz",
     urlPage: "https://wearymench.github.io/quiz/",
     tags: ["react", "typescript", "styled-components"],
+  },
+  {
+    title: "Weather App",
+    description: "Weather app made with react using Weather API from openweathermap",
+    urlCode: "https://github.com/WearyMench/weather-app",
+    urlPage: "https://wearymench.github.io/weather-app/",
+    tags: ["react", "css"],
+  },
+  {
+    title: "Rick and Morty Webpage",
+    description: "Webpage made with react using The Rick and Morty API",
+    urlCode: "https://github.com/WearyMench/rickandmorthy",
+    urlPage: "https://randmweb.netlify.app/",
+    tags: ["react", "css"],
   },
 ];
