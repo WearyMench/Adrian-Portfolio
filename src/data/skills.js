@@ -72,7 +72,6 @@ export const skillsData = [
     imagen:
       "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
   },
-  
   {
     title: ".NET",
     imagen:
