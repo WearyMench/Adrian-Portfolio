@@ -44,7 +44,7 @@ export const skillsData = [
   {
     title: "Styled Components",
     imagen:
-      "https://www.daggala.com/static/228867c3668e439101821568a8a03b54/19ca5/sc.png",
+      "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3270709/styled-components-icon-md.png",
   },
   {
     title: "React Router",
