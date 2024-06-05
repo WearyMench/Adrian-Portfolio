@@ -51,13 +51,6 @@ export const Projects = [
     tags: ["react", "typescript", "styled-components"],
   },
   {
-    title: "Weather App",
-    description: "Weather app made with react using Weather API from openweathermap",
-    urlCode: "https://github.com/WearyMench/weather-app",
-    urlPage: "https://wearymench.github.io/weather-app/",
-    tags: ["react", "css"],
-  },
-  {
     title: "Rick and Morty Webpage",
     description: "Webpage made with react using The Rick and Morty API",
     urlCode: "https://github.com/WearyMench/rickandmorthy",
