@@ -31,7 +31,7 @@ function App() {
       {/* Social Media Links with hover effects */}
       <div className="flex gap-6 mt-6">
         <motion.a
-          href="https://github.com/your-username"
+          href="https://github.com/WearyMench"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.2 }} // Enlarge on hover for interactive effect
@@ -41,7 +41,7 @@ function App() {
         </motion.a>
 
         <motion.a
-          href="https://linkedin.com/in/your-username"
+          href="https://www.linkedin.com/in/adrianm07/"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.2 }} // Enlarge on hover for interactive effect
