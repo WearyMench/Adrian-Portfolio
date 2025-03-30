@@ -1,19 +1,26 @@
-import { Global } from "./App.styles";
-
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-import AnimatedRoutes from "./components/AnimatedRoutes";
-
-import { BrowserRouter } from "react-router-dom";
-
+import React from "react";
 function App() {
   return (
-    <BrowserRouter>
-      <Global />
-      <NavBar />
-      <AnimatedRoutes />
-      <Footer />
-    </BrowserRouter>
+    <div style={{ textAlign: "center", marginTop: "20vh" }}>
+      <h1>🚧 We are working on a new version 🚀</h1>
+      <p>Follow me on my social networks:</p>
+      <a
+        href="https://github.com/WearyMench"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>{" "}
+      |
+      <a
+        href="https://www.linkedin.com/in/adrianm07/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {" "}
+        LinkedIn
+      </a>
+    </div>
   );
 }
 
