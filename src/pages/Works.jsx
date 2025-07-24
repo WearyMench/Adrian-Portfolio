@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaCode, FaSpinner, FaFilter } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";
 import ProjectFilters from "../components/ProjectFilters";
@@ -16,6 +17,7 @@ import {
 } from "./Works.styles";
 
 const Works = () => {
+  const { t } = useTranslation();
   const [allProjects, setAllProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,9 +46,12 @@ const Works = () => {
       setAllProjects(showcaseRepos);
     } catch (err) {
       console.error("Error loading projects:", err);
-      setError(
-        "Error al cargar los proyectos. Por favor, intenta de nuevo más tarde."
-      );
+      // Si es un error de rate limit, mostrar mensaje específico
+      if (err.message && err.message.includes("403")) {
+        setError(t("works.error.rateLimit"));
+      } else {
+        setError(t("works.error.title"));
+      }
     } finally {
       setLoading(false);
     }
@@ -203,10 +208,9 @@ const Works = () => {
           animate="visible"
         >
           <WorksTitle>
-            <motion.h1 variants={titleVariants}>Mis Proyectos</motion.h1>
+            <motion.h1 variants={titleVariants}>{t("works.title")}</motion.h1>
             <motion.p variants={subtitleVariants}>
-              Una colección de mis trabajos más destacados, actualizada
-              automáticamente desde GitHub
+              {t("works.subtitle")}
             </motion.p>
           </WorksTitle>
 
@@ -219,16 +223,16 @@ const Works = () => {
               <div className="loading-spinner">
                 <FaSpinner />
               </div>
-              <p>Cargando proyectos desde GitHub...</p>
+              <p>{t("works.loading")}</p>
             </motion.div>
           ) : error ? (
             <WorksError>
               <div className="error-content">
                 <FaCode />
-                <h2>Error al cargar proyectos</h2>
+                <h2>{t("works.error.title")}</h2>
                 <p>{error}</p>
                 <button onClick={loadProjects} className="retry-button">
-                  Intentar de nuevo
+                  {t("works.error.retry")}
                 </button>
               </div>
             </WorksError>
@@ -236,12 +240,8 @@ const Works = () => {
             <WorksEmpty>
               <div className="empty-content">
                 <FaGithub />
-                <h2>No hay proyectos para mostrar</h2>
-                <p>
-                  No se encontraron repositorios con el topic "showcase". Para
-                  mostrar tus proyectos aquí, agrega el topic "showcase" a tus
-                  repositorios en GitHub.
-                </p>
+                <h2>{t("works.empty.title")}</h2>
+                <p>{t("works.empty.description")}</p>
                 <div className="empty-actions">
                   <a
                     href={`https://github.com/WearyMench`}
@@ -250,10 +250,10 @@ const Works = () => {
                     className="github-link"
                   >
                     <FaGithub />
-                    Ver mi GitHub
+                    {t("works.empty.github")}
                   </a>
                   <button onClick={loadProjects} className="refresh-button">
-                    Actualizar
+                    {t("works.empty.refresh")}
                   </button>
                 </div>
               </div>

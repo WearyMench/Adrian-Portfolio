@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaCode, FaLaptopCode } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import githubService from "../services/githubService";
 
 function Skills() {
+  const { t } = useTranslation();
   const [languages, setLanguages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadLanguages();
-  }, []);
+  }, [t]); // Agregar t como dependencia para que se recargue si cambia el idioma
 
   const loadLanguages = async () => {
     try {
@@ -43,7 +45,20 @@ function Skills() {
       setLanguages(sortedLanguages);
     } catch (error) {
       console.error("Error loading languages:", error);
-      setLanguages([]);
+
+      // En caso de error, mostrar lenguajes por defecto
+      const defaultLanguages = [
+        { name: "JavaScript", bytes: 1000, color: "#f1e05a" },
+        { name: "React", bytes: 800, color: "#61dafb" },
+        { name: "HTML", bytes: 600, color: "#e34c26" },
+        { name: "CSS", bytes: 500, color: "#563d7c" },
+        { name: "TypeScript", bytes: 400, color: "#2b7489" },
+        { name: "Node.js", bytes: 300, color: "#339933" },
+        { name: "Git", bytes: 200, color: "#f05032" },
+        { name: "Vite", bytes: 150, color: "#646cff" },
+        { name: "Styled Components", bytes: 100, color: "#db7093" },
+      ];
+      setLanguages(defaultLanguages);
     } finally {
       setLoading(false);
     }
@@ -55,7 +70,7 @@ function Skills() {
       opacity: 1,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.05,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -66,7 +81,7 @@ function Skills() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.4,
+        duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -78,27 +93,24 @@ function Skills() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.1, margin: "-50px 0px" }}
     >
       <div className="skills-content">
         <motion.div className="skills-header" variants={itemVariants}>
-          <h2 className="section-title">Habilidades & Tecnologías</h2>
-          <p className="section-subtitle">
-            Tecnologías y herramientas que utilizo en mis proyectos,
-            actualizadas automáticamente desde GitHub
-          </p>
+          <h2 className="section-title">{t("skills.title")}</h2>
+          <p className="section-subtitle">{t("skills.subtitle")}</p>
         </motion.div>
 
         <motion.div className="skills-grid" variants={itemVariants}>
           {loading ? (
             <div className="skills-loading">
               <div className="loading-spinner" />
-              <span>Cargando tecnologías desde GitHub...</span>
+              <span>{t("skills.loading")}</span>
             </div>
           ) : languages.length > 0 ? (
             languages.map((language, index) => (
               <motion.div
-                key={language.name}
+                key={`${language.name}-${index}`}
                 className="skill-tag"
                 variants={itemVariants}
                 whileHover={{
@@ -122,7 +134,33 @@ function Skills() {
           ) : (
             <div className="skills-empty">
               <FaCode />
-              <span>No se encontraron tecnologías en los proyectos</span>
+              <span>{t("skills.empty")}</span>
+              <button
+                onClick={loadLanguages}
+                style={{
+                  marginTop: "16px",
+                  padding: "8px 16px",
+                  background:
+                    "linear-gradient(135deg, #00eaff 0%, #0099cc 100%)",
+                  border: "none",
+                  borderRadius: "8px",
+                  color: "#000",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = "translateY(-2px)";
+                  e.target.style.boxShadow =
+                    "0 4px 15px rgba(0, 234, 255, 0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = "translateY(0)";
+                  e.target.style.boxShadow = "none";
+                }}
+              >
+                {t("skills.retry")}
+              </button>
             </div>
           )}
         </motion.div>
@@ -132,15 +170,15 @@ function Skills() {
             <div className="category-icon">
               <FaCode />
             </div>
-            <h3>Desarrollo</h3>
-            <p>Lenguajes y tecnologías utilizados en proyectos reales</p>
+            <h3>{t("skills.categories.development.title")}</h3>
+            <p>{t("skills.categories.development.description")}</p>
           </div>
           <div className="category">
             <div className="category-icon">
               <FaLaptopCode />
             </div>
-            <h3>Automatizado</h3>
-            <p>Datos actualizados automáticamente desde GitHub</p>
+            <h3>{t("skills.categories.automated.title")}</h3>
+            <p>{t("skills.categories.automated.description")}</p>
           </div>
         </motion.div>
       </div>

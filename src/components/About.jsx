@@ -1,24 +1,26 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaGraduationCap, FaCode, FaUser } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import Eugene from "../assets/Eugene.png";
 
-const timelineData = [
-  {
-    year: "2022-2025",
-    title: "Desarrollador Web",
-    desc: "Proyectos personales y colaboraciones en GitHub",
-    icon: <FaCode />,
-  },
-  {
-    year: "2023-2025",
-    title: "Analista de sistemas",
-    desc: "Analista de mantenimiento de software",
-    icon: <FaUser />,
-  },
-];
-
 function About() {
+  const { t } = useTranslation();
+
+  const timelineData = [
+    {
+      year: t("about.timeline.webDev.period"),
+      title: t("about.timeline.webDev.title"),
+      desc: t("about.timeline.webDev.description"),
+      icon: <FaCode />,
+    },
+    {
+      year: t("about.timeline.analyst.period"),
+      title: t("about.timeline.analyst.title"),
+      desc: t("about.timeline.analyst.description"),
+      icon: <FaUser />,
+    },
+  ];
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -52,10 +54,8 @@ function About() {
     >
       <div className="about-content">
         <motion.div className="about-header" variants={itemVariants}>
-          <h2 className="section-title">Sobre Mí</h2>
-          <p className="section-subtitle">
-            Conoce mi historia, experiencia y pasión por el desarrollo web
-          </p>
+          <h2 className="section-title">{t("about.title")}</h2>
+          <p className="section-subtitle">{t("about.subtitle")}</p>
         </motion.div>
 
         <motion.div className="about-main" variants={itemVariants}>
@@ -76,29 +76,16 @@ function About() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <h3>¡Hola! Soy Adrian Mirabal</h3>
-              <p>
-                Apasionado por la tecnología y la programación. Me encanta crear
-                aplicaciones web modernas y funcionales que impacten
-                positivamente en la vida de las personas.
-              </p>
-              <p>
-                Mi enfoque se centra en el desarrollo frontend con React, pero
-                también disfruto explorando el backend y las nuevas tecnologías
-                emergentes. Siempre busco aprender y mantenerme actualizado con
-                las mejores prácticas.
-              </p>
-              <p>
-                Además de programar, disfruto el anime, la ciencia ficción y los
-                videojuegos. Creo que estas pasiones me ayudan a mantener una
-                mente creativa y abierta a nuevas ideas.
-              </p>
+              <h3>{t("about.greeting")}</h3>
+              <p>{t("about.description.p1")}</p>
+              <p>{t("about.description.p2")}</p>
+              <p>{t("about.description.p3")}</p>
             </motion.div>
           </div>
         </motion.div>
 
         <motion.div className="about-timeline" variants={itemVariants}>
-          <h3>Mi Trayectoria</h3>
+          <h3>{t("about.timeline.title")}</h3>
           <div className="timeline-container">
             {timelineData.map((item, index) => (
               <motion.div

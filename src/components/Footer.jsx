@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedin, FaArrowUp, FaHeart } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
+  const { t } = useTranslation();
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -35,7 +37,8 @@ function Footer() {
         >
           <div className="footer-text">
             <p>
-              Hecho con <FaHeart className="heart-icon" /> por{" "}
+              {t("footer.madeWith")} <FaHeart className="heart-icon" />{" "}
+              {t("footer.by")}{" "}
               <a
                 href="https://github.com/WearyMench"
                 target="_blank"
@@ -46,7 +49,7 @@ function Footer() {
               </a>
             </p>
             <p className="footer-year">
-              © {currentYear} Todos los derechos reservados
+              © {currentYear} {t("footer.rights")}
             </p>
           </div>
 
@@ -89,7 +92,7 @@ function Footer() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <p>Desarrollado con React, Styled Components y Framer Motion</p>
+          <p>{t("footer.developedWith")}</p>
         </motion.div>
       </div>
 
@@ -103,7 +106,7 @@ function Footer() {
             exit={{ opacity: 0, scale: 0 }}
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            title="Volver arriba"
+            title={t("footer.scrollTop")}
           >
             <FaArrowUp />
           </motion.button>

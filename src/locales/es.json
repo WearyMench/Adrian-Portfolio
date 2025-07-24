@@ -1,0 +1,176 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "projects": "Proyectos"
+  },
+  "hero": {
+    "greeting": "¡Hola!",
+    "name": "Soy Adrian Mirabal",
+    "subtitle": "Desarrollador Web apasionado por crear experiencias digitales modernas y funcionales que impactan y conectan con los usuarios.",
+    "cta": {
+      "projects": "Ver Proyectos",
+      "contact": "Contactar"
+    }
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "Conoce mi historia, experiencia y pasión por el desarrollo web",
+    "greeting": "¡Hola! Soy Adrian Mirabal",
+    "description": {
+      "p1": "Apasionado por la tecnología y la programación. Me encanta crear aplicaciones web modernas y funcionales que impacten positivamente en la vida de las personas.",
+      "p2": "Mi enfoque se centra en el desarrollo frontend con React, pero también disfruto explorando el backend y las nuevas tecnologías emergentes. Siempre busco aprender y mantenerme actualizado con las mejores prácticas.",
+      "p3": "Además de programar, disfruto el anime, la ciencia ficción y los videojuegos. Creo que estas pasiones me ayudan a mantener una mente creativa y abierta a nuevas ideas."
+    },
+    "timeline": {
+      "title": "Mi Trayectoria",
+      "webDev": {
+        "period": "2022-2025",
+        "title": "Desarrollador Web",
+        "description": "Proyectos personales y colaboraciones en GitHub"
+      },
+      "analyst": {
+        "period": "2023-2025",
+        "title": "Analista de sistemas",
+        "description": "Analista de mantenimiento de software"
+      }
+    }
+  },
+  "skills": {
+    "title": "Habilidades & Tecnologías",
+    "subtitle": "Tecnologías y herramientas que utilizo en mis proyectos, actualizadas automáticamente desde GitHub",
+    "loading": "Cargando tecnologías desde GitHub...",
+    "empty": "No se encontraron tecnologías en los proyectos",
+    "retry": "Reintentar desde GitHub",
+    "categories": {
+      "development": {
+        "title": "Desarrollo",
+        "description": "Lenguajes y tecnologías utilizados en proyectos reales"
+      },
+      "automated": {
+        "title": "Automatizado",
+        "description": "Datos actualizados automáticamente desde GitHub"
+      }
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes un proyecto en mente? ¡Hablemos!",
+    "email": {
+      "title": "Email",
+      "address": "adrian.mirabal07@gmail.com",
+      "copy": "Copiar",
+      "copied": "¡Copiado!"
+    },
+    "linkedin": {
+      "title": "LinkedIn",
+      "description": "Conectemos profesionalmente",
+      "action": "Ver Perfil"
+    },
+    "github": {
+      "title": "GitHub",
+      "description": "Revisa mi código y proyectos",
+      "action": "Ver Repositorios"
+    }
+  },
+  "works": {
+    "title": "Mis Proyectos",
+    "subtitle": "Una colección de mis trabajos más destacados, actualizada automáticamente desde GitHub",
+    "loading": "Cargando proyectos desde GitHub...",
+    "error": {
+      "title": "Error al cargar proyectos",
+      "rateLimit": "GitHub está limitando las peticiones. Por favor, espera un momento y vuelve a intentar.",
+      "retry": "Intentar de nuevo"
+    },
+    "empty": {
+      "title": "No hay proyectos para mostrar",
+      "description": "No se encontraron repositorios con el topic \"showcase\". Para mostrar tus proyectos aquí, agrega el topic \"showcase\" a tus repositorios en GitHub.",
+      "github": "Ver mi GitHub",
+      "refresh": "Actualizar"
+    },
+    "filters": {
+      "search": "Buscar proyectos...",
+      "title": "Filtros",
+      "languages": "Lenguajes",
+      "topics": "Topics",
+      "sort": "Ordenar por",
+      "clear": "Limpiar filtros",
+      "results": "proyecto encontrado",
+      "results_plural": "proyectos encontrados"
+    },
+    "sort": {
+      "updated": "Más recientes",
+      "created": "Más antiguos",
+      "stars": "Más estrellas",
+      "name": "Alfabético"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "projects": "proyectos",
+      "perPage": "Proyectos por página:",
+      "first": "Primera página",
+      "prev": "Página anterior",
+      "next": "Página siguiente",
+      "last": "Última página"
+    },
+    "project": {
+      "archived": "ARCHIVED",
+      "fork": "FORK",
+      "stars": "estrellas",
+      "forks": "forks",
+      "watchers": "watchers",
+      "updated": "Actualizado",
+      "viewProject": "Ver proyecto",
+      "description": "Sin descripción disponible"
+    },
+    "modal": {
+      "close": "Cerrar modal",
+      "description": "Descripción",
+      "languages": "Lenguajes de programación",
+      "topics": "Topics",
+      "links": "Enlaces",
+      "readme": "README",
+      "stats": {
+        "stars": "Estrellas",
+        "forks": "Forks",
+        "watchers": "Watchers",
+        "issues": "Issues",
+        "size": "Tamaño",
+        "updated": "Actualizado"
+      },
+      "badges": {
+        "archived": "Archivado",
+        "fork": "Fork",
+        "license": "Licencia"
+      },
+      "links": {
+        "github": "Ver en GitHub",
+        "demo": "Ver Demo",
+        "pages": "GitHub Pages"
+      },
+      "readme": {
+        "loading": "Cargando README...",
+        "empty": "No hay README disponible para este proyecto"
+      }
+    }
+  },
+  "footer": {
+    "madeWith": "Hecho con",
+    "by": "por",
+    "rights": "Todos los derechos reservados",
+    "scrollTop": "Ir arriba",
+    "developedWith": "Desarrollado con React, Styled Components y Framer Motion"
+  },
+  "notFound": {
+    "title": "404 | Adrian Mirabal",
+    "description": "Página no encontrada. Vuelve al inicio del portafolio de Adrian Mirabal.",
+    "message": "¡Ups! No encontramos la página que buscas.",
+    "question": "¿Quieres volver al inicio?",
+    "button": "Volver al Home"
+  },
+  "language": {
+    "es": "Español",
+    "en": "English"
+  }
+} 
