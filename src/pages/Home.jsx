@@ -172,7 +172,7 @@ function Home() {
           className="about-section"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1, margin: "-50px 0px" }}
           transition={{ duration: 0.8 }}
         >
           <About />
@@ -183,8 +183,8 @@ function Home() {
           className="skills-section"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true, amount: 0.1, margin: "-50px 0px" }}
+          transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Skills />
         </motion.section>
@@ -195,8 +195,8 @@ function Home() {
           className="contact-section"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          viewport={{ once: true, amount: 0.1, margin: "-50px 0px" }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="contact-content">
             <div className="contact-header">

@@ -24,19 +24,19 @@ function About() {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.8,
-        staggerChildren: 0.2,
+        duration: 0.6,
+        staggerChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.4,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -51,24 +51,14 @@ function About() {
       viewport={{ once: true, amount: 0.1 }}
     >
       <div className="about-content">
-        <motion.div
-          className="about-header"
-          variants={itemVariants}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div className="about-header" variants={itemVariants}>
           <h2 className="section-title">Sobre Mí</h2>
           <p className="section-subtitle">
             Conoce mi historia, experiencia y pasión por el desarrollo web
           </p>
         </motion.div>
 
-        <motion.div
-          className="about-main"
-          variants={itemVariants}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div className="about-main" variants={itemVariants}>
           <div className="about-photo">
             <motion.img
               src={Eugene}
@@ -107,12 +97,7 @@ function About() {
           </div>
         </motion.div>
 
-        <motion.div
-          className="about-timeline"
-          variants={itemVariants}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div className="about-timeline" variants={itemVariants}>
           <h3>Mi Trayectoria</h3>
           <div className="timeline-container">
             {timelineData.map((item, index) => (
