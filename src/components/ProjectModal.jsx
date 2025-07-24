@@ -138,7 +138,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
           onClick={onClose}
         >
           <motion.div
-            className="project-modal"
+            className="project-modal custom-scrollbar"
             variants={modalVariants}
             initial="hidden"
             animate="visible"

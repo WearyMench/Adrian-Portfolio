@@ -1,9 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaCode, FaLaptopCode } from "react-icons/fa";
-import { skillsData } from "../data/skills";
+import githubService from "../services/githubService";
 
 function Skills() {
+  const [languages, setLanguages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadLanguages();
+  }, []);
+
+  const loadLanguages = async () => {
+    try {
+      setLoading(true);
+      const showcaseRepos = await githubService.getShowcaseRepositories();
+
+      // Obtener todos los lenguajes únicos de los repositorios
+      const allLanguages = new Map();
+
+      showcaseRepos.forEach((repo) => {
+        if (repo.languages) {
+          Object.entries(repo.languages).forEach(([lang, bytes]) => {
+            if (allLanguages.has(lang)) {
+              allLanguages.set(lang, allLanguages.get(lang) + bytes);
+            } else {
+              allLanguages.set(lang, bytes);
+            }
+          });
+        }
+      });
+
+      // Convertir a array y ordenar por cantidad de bytes (más usado primero)
+      const sortedLanguages = Array.from(allLanguages.entries())
+        .sort(([, a], [, b]) => b - a)
+        .map(([name, bytes]) => ({
+          name,
+          bytes,
+          color: githubService.getLanguageColor(name),
+        }));
+
+      setLanguages(sortedLanguages);
+    } catch (error) {
+      console.error("Error loading languages:", error);
+      setLanguages([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -44,8 +89,8 @@ function Skills() {
         >
           <h2 className="section-title">Habilidades & Tecnologías</h2>
           <p className="section-subtitle">
-            Tecnologías y herramientas que utilizo para crear experiencias
-            digitales increíbles
+            Tecnologías y herramientas que utilizo en mis proyectos,
+            actualizadas automáticamente desde GitHub
           </p>
         </motion.div>
 
@@ -55,40 +100,43 @@ function Skills() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {skillsData.map((skill, index) => (
-            <motion.div
-              key={skill.title}
-              className="skill-card"
-              variants={itemVariants}
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-              whileHover={{
-                scale: 1.05,
-                y: -8,
-                transition: { duration: 0.3 },
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="skill-icon">
-                <img
-                  src={skill.imagen}
-                  alt={`Logo de ${skill.title}`}
-                  loading="lazy"
+          {loading ? (
+            <div className="skills-loading">
+              <div className="loading-spinner" />
+              <span>Cargando tecnologías desde GitHub...</span>
+            </div>
+          ) : languages.length > 0 ? (
+            languages.map((language, index) => (
+              <motion.div
+                key={language.name}
+                className="skill-tag"
+                variants={itemVariants}
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -4,
+                  transition: { duration: 0.3 },
+                }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  borderColor: language.color,
+                  color: language.color,
+                }}
+              >
+                <span
+                  className="language-dot"
+                  style={{ backgroundColor: language.color }}
                 />
-              </div>
-              <div className="skill-info">
-                <h3>{skill.title}</h3>
-                <div className="skill-level">
-                  <div className="skill-bar">
-                    <div
-                      className="skill-progress"
-                      style={{ width: `${Math.random() * 40 + 60}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                <span className="language-name">{language.name}</span>
+              </motion.div>
+            ))
+          ) : (
+            <div className="skills-empty">
+              <FaCode />
+              <span>No se encontraron tecnologías en los proyectos</span>
+            </div>
+          )}
         </motion.div>
 
         <motion.div
@@ -101,15 +149,15 @@ function Skills() {
             <div className="category-icon">
               <FaCode />
             </div>
-            <h3>Frontend</h3>
-            <p>React, JavaScript, HTML, CSS, Styled Components</p>
+            <h3>Desarrollo</h3>
+            <p>Lenguajes y tecnologías utilizados en proyectos reales</p>
           </div>
           <div className="category">
             <div className="category-icon">
               <FaLaptopCode />
             </div>
-            <h3>Herramientas</h3>
-            <p>Git, VS Code, Figma, Vite, Webpack</p>
+            <h3>Automatizado</h3>
+            <p>Datos actualizados automáticamente desde GitHub</p>
           </div>
         </motion.div>
       </div>
