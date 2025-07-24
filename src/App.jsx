@@ -1,4 +1,5 @@
 import { Global } from "./App.styles";
+import { ProjectStyles } from "./styles/ProjectStyles";
 
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -10,8 +11,11 @@ function App() {
   return (
     <BrowserRouter>
       <Global />
+      <ProjectStyles />
       <NavBar />
-      <AnimatedRoutes />
+      <div className="main-content">
+        <AnimatedRoutes />
+      </div>
       <Footer />
     </BrowserRouter>
   );

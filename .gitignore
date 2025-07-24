@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Ignorar archivos .md excepto README.md o readme.md
+!README.md
+!readme.md
+*.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

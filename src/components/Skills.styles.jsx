@@ -1,61 +1,54 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 80%;
-  margin: 100px auto;
-
-  .carousel {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    margin-top: 50px;
-    overflow: scroll;
-    font-family: sans-serif;
-  }
-
-  .carousel::-webkit-scrollbar {
-    width: 1px;
-  }
-
-  .carousel-slide {
-    border-radius: 10px;
-    background-color: #80808088;
+export const Container = styled.section`
+  width: 100%;
+  max-width: 1200px;
+  margin: 60px auto 80px auto;
+  padding: 0 2vw;
+  h1 {
+    color: #00eaff;
+    font-size: 2rem;
+    margin-bottom: 24px;
     text-align: center;
-    padding: 10px;
-    width: 120px;
-    height: 120px;
   }
+`;
 
-  img {
-    width: 60px;
+// Los estilos del carrusel ya no se usan, se eliminaron para usar el nuevo diseño de grid
+// que está definido en ProjectStyles.js
+
+export const SkillCard = styled.div`
+  min-width: 120px;
+  max-width: 140px;
+  height: 140px;
+  background: #181c24ee;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px #00eaff11;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 8px 12px 8px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  outline: none;
+  &:hover,
+  &:focus {
+    box-shadow: 0 4px 24px #00eaff44;
+    transform: scale(1.08) rotate(-2deg);
   }
+`;
 
-  @media (min-width: 1800px) {
-    .carousel-slide {
-      width: 200px;
-      height: 160px;
-    }
-    img {
-      width: 90px;
-    }
-    h4 {
-      font-size: 20px;
-    }
-  }
+export const SkillImg = styled.img`
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 2px 8px #00eaff33);
+`;
 
-  @media (max-width: 700px) {
-    width: 85%;
-
-    .carousel-slide {
-      padding: 15px;
-    }
-
-    img {
-      width: 40px;
-    }
-
-    h4 {
-      font-size: 13px;
-    }
-  }
+export const SkillTitle = styled.div`
+  color: #eaf6fb;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-align: center;
 `;

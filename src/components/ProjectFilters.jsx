@@ -1,0 +1,213 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { FaSearch, FaFilter, FaSort, FaTimes } from "react-icons/fa";
+
+const ProjectFilters = ({
+  filters,
+  setFilters,
+  availableLanguages,
+  availableTopics,
+  totalProjects,
+}) => {
+  const handleSearchChange = (e) => {
+    setFilters((prev) => ({ ...prev, search: e.target.value }));
+  };
+
+  const handleLanguageFilter = (language) => {
+    setFilters((prev) => ({
+      ...prev,
+      languages: prev.languages.includes(language)
+        ? prev.languages.filter((lang) => lang !== language)
+        : [...prev.languages, language],
+    }));
+  };
+
+  const handleTopicFilter = (topic) => {
+    setFilters((prev) => ({
+      ...prev,
+      topics: prev.topics.includes(topic)
+        ? prev.topics.filter((t) => t !== topic)
+        : [...prev.topics, topic],
+    }));
+  };
+
+  const handleSortChange = (e) => {
+    setFilters((prev) => ({ ...prev, sortBy: e.target.value }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      search: "",
+      languages: [],
+      topics: [],
+      sortBy: "updated",
+    });
+  };
+
+  const hasActiveFilters =
+    filters.search || filters.languages.length > 0 || filters.topics.length > 0;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="project-filters"
+    >
+      {/* Search Bar */}
+      <div className="search-container">
+        <div className="search-input-wrapper">
+          <FaSearch className="search-icon" />
+          <input
+            type="text"
+            placeholder="Buscar proyectos..."
+            value={filters.search}
+            onChange={handleSearchChange}
+            className="search-input"
+          />
+          {filters.search && (
+            <button
+              onClick={() => setFilters((prev) => ({ ...prev, search: "" }))}
+              className="clear-search"
+              aria-label="Limpiar búsqueda"
+            >
+              <FaTimes />
+            </button>
+          )}
+        </div>
+        <div className="results-count">
+          {totalProjects} proyecto{totalProjects !== 1 ? "s" : ""} encontrado
+          {totalProjects !== 1 ? "s" : ""}
+        </div>
+      </div>
+
+      {/* Filters and Sort */}
+      <div className="filters-container">
+        <div className="filters-section">
+          <h3 className="filters-title">
+            <FaFilter />
+            Filtros
+          </h3>
+
+          {/* Language Filters */}
+          {availableLanguages.length > 0 && (
+            <div className="filter-group">
+              <h4>Lenguajes</h4>
+              <div className="filter-tags">
+                {availableLanguages.slice(0, 8).map((language) => (
+                  <button
+                    key={language}
+                    onClick={() => handleLanguageFilter(language)}
+                    className={`filter-tag ${
+                      filters.languages.includes(language) ? "active" : ""
+                    }`}
+                  >
+                    {language}
+                  </button>
+                ))}
+                {availableLanguages.length > 8 && (
+                  <span className="more-indicator">
+                    +{availableLanguages.length - 8} más
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Topic Filters */}
+          {availableTopics.length > 0 && (
+            <div className="filter-group">
+              <h4>Topics</h4>
+              <div className="filter-tags">
+                {availableTopics.slice(0, 6).map((topic) => (
+                  <button
+                    key={topic}
+                    onClick={() => handleTopicFilter(topic)}
+                    className={`filter-tag ${
+                      filters.topics.includes(topic) ? "active" : ""
+                    }`}
+                  >
+                    {topic}
+                  </button>
+                ))}
+                {availableTopics.length > 6 && (
+                  <span className="more-indicator">
+                    +{availableTopics.length - 6} más
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="sort-section">
+          <h3 className="sort-title">
+            <FaSort />
+            Ordenar por
+          </h3>
+          <select
+            value={filters.sortBy}
+            onChange={handleSortChange}
+            className="sort-select"
+          >
+            <option value="updated">Última actualización</option>
+            <option value="created">Fecha de creación</option>
+            <option value="stars">Más estrellas</option>
+            <option value="forks">Más forks</option>
+            <option value="name">Nombre A-Z</option>
+          </select>
+        </div>
+
+        {/* Clear Filters */}
+        {hasActiveFilters && (
+          <button onClick={clearAllFilters} className="clear-filters-btn">
+            <FaTimes />
+            Limpiar filtros
+          </button>
+        )}
+      </div>
+
+      {/* Active Filters Display */}
+      {hasActiveFilters && (
+        <div className="active-filters">
+          <span className="active-filters-label">Filtros activos:</span>
+          {filters.search && (
+            <span className="active-filter">
+              "{filters.search}"
+              <button
+                onClick={() => setFilters((prev) => ({ ...prev, search: "" }))}
+                className="remove-filter"
+              >
+                <FaTimes />
+              </button>
+            </span>
+          )}
+          {filters.languages.map((language) => (
+            <span key={language} className="active-filter">
+              {language}
+              <button
+                onClick={() => handleLanguageFilter(language)}
+                className="remove-filter"
+              >
+                <FaTimes />
+              </button>
+            </span>
+          ))}
+          {filters.topics.map((topic) => (
+            <span key={topic} className="active-filter">
+              {topic}
+              <button
+                onClick={() => handleTopicFilter(topic)}
+                className="remove-filter"
+              >
+                <FaTimes />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
+export default ProjectFilters;

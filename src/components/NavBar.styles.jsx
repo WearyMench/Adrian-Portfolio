@@ -1,129 +1,221 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export const Navi = styled.nav`
-  width: ${(props) => props.extend && "65%"};
-  height: ${(props) => (props.extend ? "50vh" : "55px")};
-  background-color: ${(props) => (props.extend ? "#00b2dfd1" : "#ffffff0")};
-  position: absolute;
-  right: 40px;
-  top: 20px;
+export const Nav = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 
-  @media (max-width: 700px) {
-    right: 0px;
-    top: 0px;
-    transition: all 300ms;
-  }
-
-  @media (max-width: 380px) and (max-height: 680px) {
-    height: ${(props) => (props.extend ? "60vh" : "55px")};
+  &.scrolled {
+    background: rgba(10, 10, 10, 0.95);
+    border-bottom-color: rgba(0, 234, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 `;
 
-export const NavBarUL = styled.ul`
-  list-style: none;
+export const NavContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
   display: flex;
-  flex-direction: row;
-  justify-content: end;
-  gap: ${(props) => (props.extend ? "0px" : "30px")};
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
 
-  @media (min-width: 1800px) {
-    font-size: 22px;
+  @media (max-width: 768px) {
+    padding: 0 16px;
+    height: 60px;
+    gap: 16px;
   }
 `;
-export const ExtendedNavBarUL = styled.ul`
-  list-style: none;
+
+export const NavLogo = styled(Link)`
+  text-decoration: none;
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-  text-align: center;
-  padding-left: 0px;
+  align-items: center;
 
-  @media (min-width: 700px) {
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00eaff 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+`;
+
+export const NavMenu = styled.ul`
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: 768px) {
     display: none;
   }
 `;
 
-export const NavbarNavLink = styled(NavLink)`
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
+export const NavItem = styled.li`
+  margin: 0;
+`;
 
-  @media (max-width: 700px) {
-    display: none;
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  color: #a0a0a0;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .nav-link-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    svg {
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
   }
 
   &:hover {
-    text-decoration: underline #00b2df;
+    color: #ffffff;
+
+    .nav-link-content {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+
+      svg {
+        color: #00eaff;
+      }
+    }
+  }
+
+  &.active {
+    color: #00eaff;
+
+    .nav-link-content {
+      background: rgba(0, 234, 255, 0.1);
+      border: 1px solid rgba(0, 234, 255, 0.2);
+
+      svg {
+        color: #00eaff;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 2px;
+      background: linear-gradient(135deg, #00eaff 0%, #0099cc 100%);
+      border-radius: 1px;
+    }
   }
 `;
 
-export const NavbarA = styled.a`
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-
-  @media (max-width: 700px) {
-    display: none;
-  }
-
-  &:hover {
-    text-decoration: underline #00b2df;
-  }
-`;
-export const ExtendedNavbarNavLink = styled(NavLink)`
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline #00b2df;
-  }
-`;
-
-export const ExtendedNavbarA = styled.a`
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline #00b2df;
-  }
-`;
-
-export const ButtonNv = styled.button`
-  width: 70px;
+export const MobileMenuButton = styled.button`
+  display: none;
   background: none;
   border: none;
-  margin-top: 20px;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 
-  display: flex;
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #00eaff;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+export const MobileMenu = styled.div`
+  display: none;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   flex-direction: column;
-  gap: 4px;
+  gap: 16px;
 
-  @media (min-width: 700px) {
-    display: none;
+  @media (max-width: 768px) {
+    display: flex;
   }
 
-  .line {
-    width: 70%;
-    height: 4px;
-    background: white;
-    border-radius: 4px;
-    transition: transform 0.2s ease-out;
-  }
+  a {
+    text-decoration: none;
+    color: #a0a0a0;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-  .line:nth-child(1) {
-    transform: ${(props) =>
-      props.extendNavbar && "translateY(8px) rotate(45deg)"};
-  }
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
 
-  .line:nth-child(2) {
-    opacity: ${(props) => props.extendNavbar && "0"};
-  }
+      svg {
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+    }
 
-  .line:nth-child(3) {
-    transform: ${(props) =>
-      props.extendNavbar && "translateY(-8px) rotate(-45deg)"};
+    &:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+
+      .mobile-nav-link svg {
+        color: #00eaff;
+      }
+    }
+
+    &.active {
+      color: #00eaff;
+      background: rgba(0, 234, 255, 0.1);
+      border: 1px solid rgba(0, 234, 255, 0.2);
+
+      .mobile-nav-link svg {
+        color: #00eaff;
+      }
+    }
   }
 `;
