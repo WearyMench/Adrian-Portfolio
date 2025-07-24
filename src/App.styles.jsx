@@ -10,9 +10,6 @@ export const Global = createGlobalStyle`
     margin: 0px;
     padding: 0px;
     min-width: 320px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
     background-image: url(${pattern});
     color: white;
     font-family: 'Playfair Display', serif;
@@ -32,5 +29,14 @@ export const Global = createGlobalStyle`
     ::-webkit-scrollbar-thumb:hover {
       background: #00b2df;
     }
+  }
+
+  #root {
+    /* Sin overflow para evitar scroll interno */
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
   }
 `;

@@ -1,67 +1,119 @@
-import React, { useState, useEffect, useRef } from "react";
-
-import { Container } from "./Skills.styles";
-
+import React from "react";
+import { motion } from "framer-motion";
+import { FaCode, FaLaptopCode } from "react-icons/fa";
 import { skillsData } from "../data/skills";
 
 function Skills() {
-  const carouselRef1 = useRef(null);
-  const carouselRef2 = useRef(null);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.1,
+      },
+    },
+  };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      // Calcula la nueva posición de scroll
-      const newScrollPosition1 =
-        carouselRef1.current.scrollLeft + carouselRef1.current.offsetWidth;
-      const newScrollPosition2 =
-        carouselRef2.current.scrollLeft + carouselRef2.current.offsetWidth;
-
-      // Realiza la animación de scroll
-      if (newScrollPosition1 < carouselRef1.current.scrollWidth) {
-        carouselRef1.current.scrollTo({
-          left: newScrollPosition1,
-          behavior: "smooth",
-        });
-      } else {
-        carouselRef1.current.scrollTo({ left: 0, behavior: "smooth" });
-      }
-      if (newScrollPosition2 < carouselRef2.current.scrollWidth) {
-        carouselRef2.current.scrollTo({
-          left: newScrollPosition2,
-          behavior: "smooth",
-        });
-      } else {
-        carouselRef2.current.scrollTo({ left: 0, behavior: "smooth" });
-      }
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
+  };
 
   return (
-    <Container>
-      <h1 id="skills">My skills:</h1>
+    <motion.div
+      className="skills-component"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+    >
+      <div className="skills-content">
+        <motion.div
+          className="skills-header"
+          variants={itemVariants}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <h2 className="section-title">Habilidades & Tecnologías</h2>
+          <p className="section-subtitle">
+            Tecnologías y herramientas que utilizo para crear experiencias
+            digitales increíbles
+          </p>
+        </motion.div>
 
-      <div>
-        <div className="carousel" ref={carouselRef1}>
-          {skillsData.slice(0, 10).map((skill, index) => (
-            <div key={index} className={`carousel-slide`}>
-              <img src={skill.imagen} alt={skill.title} />
-              <h4>{skill.title}</h4>
-            </div>
+        <motion.div
+          className="skills-grid"
+          variants={itemVariants}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {skillsData.map((skill, index) => (
+            <motion.div
+              key={skill.title}
+              className="skill-card"
+              variants={itemVariants}
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+              whileHover={{
+                scale: 1.05,
+                y: -8,
+                transition: { duration: 0.3 },
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="skill-icon">
+                <img
+                  src={skill.imagen}
+                  alt={`Logo de ${skill.title}`}
+                  loading="lazy"
+                />
+              </div>
+              <div className="skill-info">
+                <h3>{skill.title}</h3>
+                <div className="skill-level">
+                  <div className="skill-bar">
+                    <div
+                      className="skill-progress"
+                      style={{ width: `${Math.random() * 40 + 60}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="carousel" ref={carouselRef2}>
-          {skillsData.slice(10, 20).map((skill, index) => (
-            <div key={index} className={`carousel-slide`}>
-              <img src={skill.imagen} alt={skill.title} />
-              <h4>{skill.title}</h4>
+        <motion.div
+          className="skills-categories"
+          variants={itemVariants}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <div className="category">
+            <div className="category-icon">
+              <FaCode />
             </div>
-          ))}
-        </div>
+            <h3>Frontend</h3>
+            <p>React, JavaScript, HTML, CSS, Styled Components</p>
+          </div>
+          <div className="category">
+            <div className="category-icon">
+              <FaLaptopCode />
+            </div>
+            <h3>Herramientas</h3>
+            <p>Git, VS Code, Figma, Vite, Webpack</p>
+          </div>
+        </motion.div>
       </div>
-    </Container>
+    </motion.div>
   );
 }
 
