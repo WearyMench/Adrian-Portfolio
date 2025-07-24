@@ -1,6 +1,20 @@
 import { createGlobalStyle } from "styled-components";
 
 export const ProjectStyles = createGlobalStyle`
+  /* Optimizaciones para animaciones en móvil */
+  @media (max-width: 768px) {
+    .skills-component,
+    .about-component {
+      min-height: auto !important;
+    }
+    
+    /* Reducir delays en móvil para animaciones más rápidas */
+    .skills-component .skill-tag,
+    .about-component .timeline-item {
+      animation-delay: 0.05s !important;
+    }
+  }
+
   /* Estilos para Home */
   .home-container {
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);

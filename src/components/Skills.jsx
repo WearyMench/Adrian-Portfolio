@@ -54,19 +54,19 @@ function Skills() {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.8,
-        staggerChildren: 0.1,
+        duration: 0.6,
+        staggerChildren: 0.05,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.4,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -81,12 +81,7 @@ function Skills() {
       viewport={{ once: true, amount: 0.1 }}
     >
       <div className="skills-content">
-        <motion.div
-          className="skills-header"
-          variants={itemVariants}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div className="skills-header" variants={itemVariants}>
           <h2 className="section-title">Habilidades & Tecnologías</h2>
           <p className="section-subtitle">
             Tecnologías y herramientas que utilizo en mis proyectos,
@@ -94,12 +89,7 @@ function Skills() {
           </p>
         </motion.div>
 
-        <motion.div
-          className="skills-grid"
-          variants={itemVariants}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div className="skills-grid" variants={itemVariants}>
           {loading ? (
             <div className="skills-loading">
               <div className="loading-spinner" />
@@ -111,8 +101,6 @@ function Skills() {
                 key={language.name}
                 className="skill-tag"
                 variants={itemVariants}
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
                 whileHover={{
                   scale: 1.05,
                   y: -4,
@@ -139,12 +127,7 @@ function Skills() {
           )}
         </motion.div>
 
-        <motion.div
-          className="skills-categories"
-          variants={itemVariants}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div className="skills-categories" variants={itemVariants}>
           <div className="category">
             <div className="category-icon">
               <FaCode />
