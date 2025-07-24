@@ -6,6 +6,7 @@ import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ProjectPagination = ({
   currentPage,
@@ -15,6 +16,7 @@ const ProjectPagination = ({
   onPageChange,
   onProjectsPerPageChange,
 }) => {
+  const { t } = useTranslation();
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 5;
@@ -63,11 +65,15 @@ const ProjectPagination = ({
       {/* Projects Info */}
       <div className="pagination-info">
         <span>
-          Mostrando {startIndex}-{endIndex} de {totalProjects} proyectos
+          {t("works.pagination.showing")} {startIndex}-{endIndex}{" "}
+          {t("works.pagination.of")} {totalProjects}{" "}
+          {t("works.pagination.projects")}
         </span>
 
         <div className="projects-per-page">
-          <label htmlFor="projects-per-page">Proyectos por página:</label>
+          <label htmlFor="projects-per-page">
+            {t("works.pagination.perPage")}
+          </label>
           <select
             id="projects-per-page"
             value={projectsPerPage}
@@ -90,7 +96,7 @@ const ProjectPagination = ({
             onClick={() => onPageChange(1)}
             disabled={currentPage === 1}
             className="pagination-btn first-page"
-            aria-label="Primera página"
+            aria-label={t("works.pagination.first")}
           >
             <FaAngleDoubleLeft />
           </button>
@@ -100,7 +106,7 @@ const ProjectPagination = ({
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className="pagination-btn prev-page"
-            aria-label="Página anterior"
+            aria-label={t("works.pagination.prev")}
           >
             <FaChevronLeft />
           </button>
@@ -117,7 +123,7 @@ const ProjectPagination = ({
                     className={`pagination-btn page-number ${
                       currentPage === page ? "active" : ""
                     }`}
-                    aria-label={`Página ${page}`}
+                    aria-label={`${t("works.pagination.page")} ${page}`}
                     aria-current={currentPage === page ? "page" : undefined}
                   >
                     {page}
@@ -132,7 +138,7 @@ const ProjectPagination = ({
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             className="pagination-btn next-page"
-            aria-label="Página siguiente"
+            aria-label={t("works.pagination.next")}
           >
             <FaChevronRight />
           </button>
@@ -142,7 +148,7 @@ const ProjectPagination = ({
             onClick={() => onPageChange(totalPages)}
             disabled={currentPage === totalPages}
             className="pagination-btn last-page"
-            aria-label="Última página"
+            aria-label={t("works.pagination.last")}
           >
             <FaAngleDoubleRight />
           </button>

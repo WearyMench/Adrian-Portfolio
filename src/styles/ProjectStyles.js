@@ -15,6 +15,46 @@ export const ProjectStyles = createGlobalStyle`
     }
   }
 
+  /* Language Toggle */
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(0, 234, 255, 0.3);
+      color: #00eaff;
+    }
+
+    .flag-icon {
+      font-size: 1.1rem;
+    }
+
+    .language-text {
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      
+      .flag-icon {
+        font-size: 1rem;
+      }
+    }
+  }
+
   /* Estilos para Home */
   .home-container {
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);

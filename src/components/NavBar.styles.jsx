@@ -218,4 +218,10 @@ export const MobileMenu = styled.div`
       }
     }
   }
+
+  .mobile-language-toggle {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: center;
+  }
 `;

@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import About from "../components/About";
 import Skills from "../components/Skills";
 import devBack from "../assets/devBack.png";
@@ -17,6 +18,7 @@ import blob from "../assets/Blob.png";
 const EMAIL = "adrian.mirabal07@gmail.com";
 
 function Home() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
 
@@ -88,14 +90,10 @@ function Home() {
             <motion.div className="hero-left" variants={heroVariants}>
               <div className="hero-text">
                 <h1 className="hero-title">
-                  ¡Hola! <br />
-                  Soy <span className="highlight">Adrian Mirabal</span>
+                  {t("hero.greeting")} <br />
+                  {t("hero.name")}
                 </h1>
-                <p className="hero-subtitle">
-                  Desarrollador Web apasionado por crear experiencias digitales
-                  modernas y funcionales que impactan y conectan con los
-                  usuarios.
-                </p>
+                <p className="hero-subtitle">{t("hero.subtitle")}</p>
                 <div className="hero-actions">
                   <motion.button
                     className="cta-button primary"
@@ -103,7 +101,7 @@ function Home() {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => navigate("/works")}
                   >
-                    Ver Proyectos
+                    {t("hero.cta.projects")}
                   </motion.button>
                   <motion.button
                     className="cta-button secondary"
@@ -115,7 +113,7 @@ function Home() {
                         .scrollIntoView({ behavior: "smooth" })
                     }
                   >
-                    Contactar
+                    {t("hero.cta.contact")}
                   </motion.button>
                 </div>
               </div>
@@ -200,10 +198,8 @@ function Home() {
         >
           <div className="contact-content">
             <div className="contact-header">
-              <h2 className="section-title">Contacto</h2>
-              <p className="section-subtitle">
-                ¿Tienes un proyecto en mente? ¡Hablemos!
-              </p>
+              <h2 className="section-title">{t("contact.title")}</h2>
+              <p className="section-subtitle">{t("contact.subtitle")}</p>
             </div>
 
             <div className="contact-methods">
@@ -212,17 +208,19 @@ function Home() {
                   <FaEnvelope />
                 </div>
                 <div className="contact-info">
-                  <h3>Email</h3>
-                  <p>adrian.mirabal07@gmail.com</p>
+                  <h3>{t("contact.email.title")}</h3>
+                  <p>{t("contact.email.address")}</p>
                   <motion.button
                     className="copy-button"
                     onClick={handleCopy}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    title="Copiar email"
+                    title={t("contact.email.copy")}
                   >
                     {copied ? <FaCheck /> : <FaCopy />}
-                    {copied ? "¡Copiado!" : "Copiar"}
+                    {copied
+                      ? t("contact.email.copied")
+                      : t("contact.email.copy")}
                   </motion.button>
                 </div>
               </div>
@@ -232,8 +230,8 @@ function Home() {
                   <FaLinkedin />
                 </div>
                 <div className="contact-info">
-                  <h3>LinkedIn</h3>
-                  <p>Conectemos profesionalmente</p>
+                  <h3>{t("contact.linkedin.title")}</h3>
+                  <p>{t("contact.linkedin.description")}</p>
                   <motion.a
                     href="https://linkedin.com/in/adrianm07"
                     target="_blank"
@@ -242,7 +240,7 @@ function Home() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Ver Perfil
+                    {t("contact.linkedin.action")}
                   </motion.a>
                 </div>
               </div>
@@ -252,8 +250,8 @@ function Home() {
                   <FaGithub />
                 </div>
                 <div className="contact-info">
-                  <h3>GitHub</h3>
-                  <p>Revisa mi código y proyectos</p>
+                  <h3>{t("contact.github.title")}</h3>
+                  <p>{t("contact.github.description")}</p>
                   <motion.a
                     href="https://github.com/WearyMench"
                     target="_blank"
@@ -262,7 +260,7 @@ function Home() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Ver Repositorios
+                    {t("contact.github.action")}
                   </motion.a>
                 </div>
               </div>

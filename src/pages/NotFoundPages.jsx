@@ -2,18 +2,17 @@ import React from "react";
 import { Wrapper } from "./NotFound.styles";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 function NotFoundPages() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <>
       <Helmet>
-        <title>404 | Adrian Mirabal</title>
-        <meta
-          name="description"
-          content="Página no encontrada. Vuelve al inicio del portafolio de Adrian Mirabal."
-        />
+        <title>{t("notFound.title")}</title>
+        <meta name="description" content={t("notFound.description")} />
       </Helmet>
       <Wrapper
         as={motion.div}
@@ -23,9 +22,9 @@ function NotFoundPages() {
       >
         <h1 style={{ fontSize: 48, marginBottom: 18 }}>🤖 404</h1>
         <p style={{ color: "#eaf6fb", marginBottom: 24, fontSize: 20 }}>
-          ¡Ups! No encontramos la página que buscas.
+          {t("notFound.message")}
           <br />
-          ¿Quieres volver al inicio?
+          {t("notFound.question")}
         </p>
         <button
           style={{
@@ -42,7 +41,7 @@ function NotFoundPages() {
           }}
           onClick={() => navigate("/")}
         >
-          Volver al Home
+          {t("notFound.button")}
         </button>
       </Wrapper>
     </>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes, FaHome, FaCode, FaUser } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "./LanguageToggle";
 import {
   Nav,
   NavContainer,
@@ -13,6 +15,7 @@ import {
 } from "./NavBar.styles";
 
 const NavBar = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -63,14 +66,14 @@ const NavBar = () => {
   };
 
   const navItems = [
-    { name: "Inicio", path: "/", icon: <FaHome /> },
+    { name: t("nav.home"), path: "/", icon: <FaHome /> },
     {
-      name: "Sobre mí",
+      name: t("nav.about"),
       path: "/#about",
       icon: <FaUser />,
       onClick: handleAboutClick,
     },
-    { name: "Proyectos", path: "/works", icon: <FaCode /> },
+    { name: t("nav.projects"), path: "/works", icon: <FaCode /> },
   ];
 
   return (
@@ -109,6 +112,8 @@ const NavBar = () => {
           ))}
         </NavMenu>
 
+        <LanguageToggle />
+
         <MobileMenuButton onClick={toggleMenu}>
           <motion.div
             animate={isOpen ? "open" : "closed"}
@@ -146,6 +151,14 @@ const NavBar = () => {
                 </NavLink>
               </motion.div>
             ))}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+              className="mobile-language-toggle"
+            >
+              <LanguageToggle />
+            </motion.div>
           </MobileMenu>
         )}
       </AnimatePresence>

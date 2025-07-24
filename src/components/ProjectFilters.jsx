@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaFilter, FaSort, FaTimes } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ProjectFilters = ({
   filters,
@@ -9,6 +10,7 @@ const ProjectFilters = ({
   availableTopics,
   totalProjects,
 }) => {
+  const { t } = useTranslation();
   const handleSearchChange = (e) => {
     setFilters((prev) => ({ ...prev, search: e.target.value }));
   };
@@ -60,7 +62,7 @@ const ProjectFilters = ({
           <FaSearch className="search-icon" />
           <input
             type="text"
-            placeholder="Buscar proyectos..."
+            placeholder={t("works.filters.search")}
             value={filters.search}
             onChange={handleSearchChange}
             className="search-input"
@@ -76,8 +78,7 @@ const ProjectFilters = ({
           )}
         </div>
         <div className="results-count">
-          {totalProjects} proyecto{totalProjects !== 1 ? "s" : ""} encontrado
-          {totalProjects !== 1 ? "s" : ""}
+          {totalProjects} {t("works.filters.results", { count: totalProjects })}
         </div>
       </div>
 
@@ -86,13 +87,13 @@ const ProjectFilters = ({
         <div className="filters-section">
           <h3 className="filters-title">
             <FaFilter />
-            Filtros
+            {t("works.filters.title")}
           </h3>
 
           {/* Language Filters */}
           {availableLanguages.length > 0 && (
             <div className="filter-group">
-              <h4>Lenguajes</h4>
+              <h4>{t("works.filters.languages")}</h4>
               <div className="filter-tags">
                 {availableLanguages.slice(0, 8).map((language) => (
                   <button
@@ -117,7 +118,7 @@ const ProjectFilters = ({
           {/* Topic Filters */}
           {availableTopics.length > 0 && (
             <div className="filter-group">
-              <h4>Topics</h4>
+              <h4>{t("works.filters.topics")}</h4>
               <div className="filter-tags">
                 {availableTopics.slice(0, 6).map((topic) => (
                   <button
@@ -143,18 +144,18 @@ const ProjectFilters = ({
         <div className="sort-section">
           <h3 className="sort-title">
             <FaSort />
-            Ordenar por
+            {t("works.filters.sort")}
           </h3>
           <select
             value={filters.sortBy}
             onChange={handleSortChange}
             className="sort-select"
           >
-            <option value="updated">Última actualización</option>
-            <option value="created">Fecha de creación</option>
-            <option value="stars">Más estrellas</option>
-            <option value="forks">Más forks</option>
-            <option value="name">Nombre A-Z</option>
+            <option value="updated">{t("works.sort.updated")}</option>
+            <option value="created">{t("works.sort.created")}</option>
+            <option value="stars">{t("works.sort.stars")}</option>
+            <option value="forks">{t("works.sort.forks")}</option>
+            <option value="name">{t("works.sort.name")}</option>
           </select>
         </div>
 
@@ -162,7 +163,7 @@ const ProjectFilters = ({
         {hasActiveFilters && (
           <button onClick={clearAllFilters} className="clear-filters-btn">
             <FaTimes />
-            Limpiar filtros
+            {t("works.filters.clear")}
           </button>
         )}
       </div>

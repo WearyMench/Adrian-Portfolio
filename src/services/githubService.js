@@ -13,29 +13,53 @@ class GitHubService {
       return cached.data;
     }
 
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-          "User-Agent": "Adrian-Portfolio",
-        },
-      });
+    const maxRetries = 3;
+    let lastError;
 
-      if (!response.ok) {
-        throw new Error(`GitHub API error: ${response.status}`);
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await fetch(url, {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            "User-Agent": "Adrian-Portfolio",
+          },
+        });
+
+        if (!response.ok) {
+          if (response.status === 403) {
+            console.warn(
+              `GitHub API rate limit (attempt ${attempt}/${maxRetries}), waiting ${
+                attempt * 2
+              } seconds...`
+            );
+            await new Promise((resolve) => setTimeout(resolve, attempt * 2000));
+            lastError = new Error(`GitHub API rate limit: ${response.status}`);
+            continue; // Intentar de nuevo
+          }
+          throw new Error(`GitHub API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        this.cache.set(cacheKey, {
+          data,
+          timestamp: Date.now(),
+        });
+
+        return data;
+      } catch (error) {
+        console.error(
+          `Error fetching from GitHub API (attempt ${attempt}/${maxRetries}):`,
+          error
+        );
+        lastError = error;
+
+        if (attempt < maxRetries) {
+          await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+        }
       }
-
-      const data = await response.json();
-      this.cache.set(cacheKey, {
-        data,
-        timestamp: Date.now(),
-      });
-
-      return data;
-    } catch (error) {
-      console.error("Error fetching from GitHub API:", error);
-      throw error;
     }
+
+    throw lastError;
   }
 
   async getShowcaseRepositories() {
@@ -51,47 +75,87 @@ class GitHubService {
 
       for (const repo of repos) {
         if (repo.topics && repo.topics.includes("showcase")) {
-          // Obtener información adicional del repo
-          const repoDetails = await this.fetchWithCache(
-            `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}`,
-            `repo-${repo.name}`
-          );
+          try {
+            // Agregar un pequeño delay entre peticiones para evitar rate limits
+            await new Promise((resolve) => setTimeout(resolve, 100));
 
-          // Obtener lenguajes del repo
-          const languages = await this.fetchWithCache(
-            `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}/languages`,
-            `languages-${repo.name}`
-          );
+            // Obtener información adicional del repo
+            const repoDetails = await this.fetchWithCache(
+              `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}`,
+              `repo-${repo.name}`
+            );
 
-          showcaseRepos.push({
-            id: repo.id,
-            name: repo.name,
-            fullName: repo.full_name,
-            description: repo.description,
-            htmlUrl: repo.html_url,
-            homepage: repo.homepage,
-            topics: repo.topics || [],
-            stargazersCount: repo.stargazers_count,
-            forksCount: repo.forks_count,
-            updatedAt: repo.updated_at,
-            createdAt: repo.created_at,
-            language: repo.language,
-            languages: languages,
-            hasIssues: repo.has_issues,
-            hasWiki: repo.has_wiki,
-            hasPages: repo.has_pages,
-            defaultBranch: repo.default_branch,
-            size: repo.size,
-            archived: repo.archived,
-            disabled: repo.disabled,
-            private: repo.private,
-            fork: repo.fork,
-            license: repo.license,
-            openIssuesCount: repo.open_issues_count,
-            watchersCount: repo.watchers_count,
-            networkCount: repoDetails.network_count,
-            subscribersCount: repoDetails.subscribers_count,
-          });
+            // Obtener lenguajes del repo
+            const languages = await this.fetchWithCache(
+              `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}/languages`,
+              `languages-${repo.name}`
+            );
+
+            showcaseRepos.push({
+              id: repo.id,
+              name: repo.name,
+              fullName: repo.full_name,
+              description: repo.description,
+              htmlUrl: repo.html_url,
+              homepage: repo.homepage,
+              topics: repo.topics || [],
+              stargazersCount: repo.stargazers_count,
+              forksCount: repo.forks_count,
+              updatedAt: repo.updated_at,
+              createdAt: repo.created_at,
+              language: repo.language,
+              languages: languages,
+              hasIssues: repo.has_issues,
+              hasWiki: repo.has_wiki,
+              hasPages: repo.has_pages,
+              defaultBranch: repo.default_branch,
+              size: repo.size,
+              archived: repo.archived,
+              disabled: repo.disabled,
+              private: repo.private,
+              fork: repo.fork,
+              license: repo.license,
+              openIssuesCount: repo.open_issues_count,
+              watchersCount: repo.watchers_count,
+              networkCount: repoDetails.network_count,
+              subscribersCount: repoDetails.subscribers_count,
+            });
+          } catch (repoError) {
+            console.warn(
+              `Error fetching details for repo ${repo.name}:`,
+              repoError
+            );
+            // Si falla obtener detalles, usar solo la información básica del repo
+            showcaseRepos.push({
+              id: repo.id,
+              name: repo.name,
+              fullName: repo.full_name,
+              description: repo.description,
+              htmlUrl: repo.html_url,
+              homepage: repo.homepage,
+              topics: repo.topics || [],
+              stargazersCount: repo.stargazers_count,
+              forksCount: repo.forks_count,
+              updatedAt: repo.updated_at,
+              createdAt: repo.created_at,
+              language: repo.language,
+              languages: {},
+              hasIssues: repo.has_issues,
+              hasWiki: repo.has_wiki,
+              hasPages: repo.has_pages,
+              defaultBranch: repo.default_branch,
+              size: repo.size,
+              archived: repo.archived,
+              disabled: repo.disabled,
+              private: repo.private,
+              fork: repo.fork,
+              license: repo.license,
+              openIssuesCount: repo.open_issues_count,
+              watchersCount: repo.watchers_count,
+              networkCount: 0,
+              subscribersCount: 0,
+            });
+          }
         }
       }
 
