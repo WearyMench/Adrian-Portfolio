@@ -597,6 +597,7 @@ export const ProjectStyles = createGlobalStyle`
 
             @media (max-width: 768px) {
               flex-direction: column;
+              align-items: center;
               text-align: center;
               gap: 16px;
             }
@@ -621,6 +622,11 @@ export const ProjectStyles = createGlobalStyle`
 
             .timeline-content {
               flex: 1;
+
+              @media (max-width: 768px) {
+                width: 100%;
+                max-width: 100%;
+              }
 
               .timeline-year {
                 font-size: 0.9rem;
@@ -1450,6 +1456,100 @@ export const ProjectStyles = createGlobalStyle`
       }
     }
 
+    .modal-primary-actions {
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      padding: 12px 24px 14px;
+      background: linear-gradient(
+        180deg,
+        rgba(22, 22, 22, 0.98) 0%,
+        rgba(12, 12, 12, 0.97) 100%
+      );
+      border-bottom: 1px solid rgba(0, 234, 255, 0.2);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(14px);
+
+      .modal-primary-actions__title {
+        margin: 0 0 8px 0;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #00eaff;
+      }
+
+      .modal-primary-actions__row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: stretch;
+      }
+
+      .modal-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex: 1 1 120px;
+        min-height: 38px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          border-color 0.2s ease, background 0.2s ease;
+
+        &:hover {
+          transform: translateY(-1px);
+        }
+
+        &:focus-visible {
+          outline: 2px solid #00eaff;
+          outline-offset: 2px;
+        }
+
+        svg {
+          font-size: 0.9em;
+          flex-shrink: 0;
+        }
+      }
+
+      .modal-cta--primary {
+        background: linear-gradient(135deg, #00eaff 0%, #0099cc 100%);
+        color: #0a0a0a;
+        box-shadow: 0 3px 12px rgba(0, 234, 255, 0.28);
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(0, 234, 255, 0.38);
+        }
+      }
+
+      .modal-cta--secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        border-color: rgba(0, 234, 255, 0.45);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(0, 234, 255, 0.65);
+        }
+      }
+
+      .modal-cta--pages {
+        background: rgba(255, 193, 7, 0.12);
+        color: #ffc107;
+        border-color: rgba(255, 193, 7, 0.35);
+
+        &:hover {
+          background: rgba(255, 193, 7, 0.2);
+          border-color: rgba(255, 193, 7, 0.55);
+        }
+      }
+    }
+
     .modal-content {
       padding: 30px;
 
@@ -1703,6 +1803,21 @@ export const ProjectStyles = createGlobalStyle`
 
         .modal-title h2 {
           font-size: 1.5rem;
+        }
+      }
+
+      .modal-primary-actions {
+        padding: 10px 16px 12px;
+
+        .modal-primary-actions__row {
+          flex-direction: column;
+        }
+
+        .modal-cta {
+          flex: 1 1 auto;
+          width: 100%;
+          min-height: 40px;
+          padding: 8px 12px;
         }
       }
 

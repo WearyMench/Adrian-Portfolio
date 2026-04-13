@@ -11,7 +11,7 @@ function Skills() {
 
   useEffect(() => {
     loadLanguages();
-  }, [t]); // Agregar t como dependencia para que se recargue si cambia el idioma
+  }, []);
 
   const loadLanguages = async () => {
     try {

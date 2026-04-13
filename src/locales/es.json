@@ -25,12 +25,12 @@
     "timeline": {
       "title": "Mi Trayectoria",
       "webDev": {
-        "period": "2022-2025",
+        "period": "2022–actualidad",
         "title": "Desarrollador Web",
         "description": "Proyectos personales y colaboraciones en GitHub"
       },
       "analyst": {
-        "period": "2023-2025",
+        "period": "2023–actualidad",
         "title": "Analista de sistemas",
         "description": "Analista de mantenimiento de software"
       }
@@ -95,6 +95,9 @@
       "topics": "Topics",
       "sort": "Ordenar por",
       "clear": "Limpiar filtros",
+      "clearSearch": "Limpiar búsqueda",
+      "activeLabel": "Filtros activos:",
+      "moreCount": "+{{count}} más",
       "results": "proyecto encontrado",
       "results_plural": "proyectos encontrados"
     },
@@ -102,6 +105,7 @@
       "updated": "Más recientes",
       "created": "Más antiguos",
       "stars": "Más estrellas",
+      "forks": "Más forks",
       "name": "Alfabético"
     },
     "pagination": {
@@ -128,21 +132,24 @@
       "close": "Cerrar modal",
       "description": "Descripción",
       "languages": "Lenguajes de programación",
-      "topics": "Topics",
-      "links": "Enlaces",
-      "readme": "README",
+      "topics": "Temas",
+      "linksSectionTitle": "Enlaces",
+      "readmeHeading": "README",
       "stats": {
         "stars": "Estrellas",
         "forks": "Forks",
-        "watchers": "Watchers",
-        "issues": "Issues",
+        "watchers": "Observadores",
+        "issues": "Incidencias",
         "size": "Tamaño",
         "updated": "Actualizado"
       },
       "badges": {
         "archived": "Archivado",
         "fork": "Fork",
-        "license": "Licencia"
+        "license": "Licencia",
+        "archivedTitle": "Proyecto archivado",
+        "forkTitle": "Fork de otro repositorio",
+        "licenseTitle": "Licencia: {{name}}"
       },
       "links": {
         "github": "Ver en GitHub",

@@ -7,7 +7,7 @@ import {
   FaCopy,
   FaCheck,
 } from "react-icons/fa";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import About from "../components/About";

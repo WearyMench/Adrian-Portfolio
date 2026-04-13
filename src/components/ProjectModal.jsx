@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FaGithub,
   FaExternalLinkAlt,
   FaStar,
   FaCodeBranch,
   FaEye,
-  FaCalendarAlt,
   FaTimes,
   FaDownload,
   FaCode,
@@ -17,8 +17,11 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import githubService from "../services/githubService";
+import { formatRelativeUpdated } from "../utils/formatRelativeDate";
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage || i18n.language || "en";
   const [readme, setReadme] = useState(null);
   const [isLoadingReadme, setIsLoadingReadme] = useState(false);
 
@@ -34,7 +37,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
     setIsLoadingReadme(true);
     try {
       const readmeContent = await githubService.getRepositoryReadme(
-        project.name
+        project.name,
+        project.defaultBranch
       );
       setReadme(readmeContent);
     } catch (error) {
@@ -98,7 +102,6 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
     languages,
     topics,
     updatedAt,
-    createdAt,
     archived,
     fork,
     size,
@@ -151,24 +154,29 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 <h2>{name}</h2>
                 <div className="project-badges">
                   {archived && (
-                    <span className="badge archived" title="Proyecto archivado">
+                    <span
+                      className="badge archived"
+                      title={t("works.modal.badges.archivedTitle")}
+                    >
                       <FaShieldAlt />
-                      Archivado
+                      {t("works.modal.badges.archived")}
                     </span>
                   )}
                   {fork && (
                     <span
                       className="badge fork"
-                      title="Fork de otro repositorio"
+                      title={t("works.modal.badges.forkTitle")}
                     >
                       <FaDownload />
-                      Fork
+                      {t("works.modal.badges.fork")}
                     </span>
                   )}
                   {license && (
                     <span
                       className="badge license"
-                      title={`Licencia: ${license.name}`}
+                      title={t("works.modal.badges.licenseTitle", {
+                        name: license.name,
+                      })}
                     >
                       <FaInfoCircle />
                       {license.name}
@@ -179,10 +187,54 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               <button
                 className="modal-close"
                 onClick={onClose}
-                aria-label="Cerrar modal"
+                aria-label={t("works.modal.close")}
               >
                 <FaTimes />
               </button>
+            </div>
+
+            <div
+              className="modal-primary-actions"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="modal-primary-actions__title">
+                {t("works.project.viewProject")}
+              </p>
+              <div className="modal-primary-actions__row">
+                {homepage ? (
+                  <a
+                    href={homepage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="modal-cta modal-cta--primary"
+                  >
+                    <FaExternalLinkAlt aria-hidden />
+                    <span>{t("works.modal.links.demo")}</span>
+                  </a>
+                ) : null}
+                <a
+                  href={htmlUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`modal-cta ${
+                    homepage ? "modal-cta--secondary" : "modal-cta--primary"
+                  }`}
+                >
+                  <FaGithub aria-hidden />
+                  <span>{t("works.modal.links.github")}</span>
+                </a>
+                {hasPages ? (
+                  <a
+                    href={`https://${fullName}.github.io`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="modal-cta modal-cta--pages"
+                  >
+                    <FaLink aria-hidden />
+                    <span>{t("works.modal.links.pages")}</span>
+                  </a>
+                ) : null}
+              </div>
             </div>
 
             {/* Content */}
@@ -190,8 +242,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               {/* Project Info */}
               <div className="project-info">
                 <div className="info-section">
-                  <h3>Descripción</h3>
-                  <p>{description || "Sin descripción disponible"}</p>
+                  <h3>{t("works.modal.description")}</h3>
+                  <p>{description || t("works.project.description")}</p>
                 </div>
 
                 {/* Stats Grid */}
@@ -200,28 +252,36 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     <FaStar />
                     <div>
                       <span className="stat-value">{stargazersCount}</span>
-                      <span className="stat-label">Estrellas</span>
+                      <span className="stat-label">
+                        {t("works.modal.stats.stars")}
+                      </span>
                     </div>
                   </div>
                   <div className="stat-item">
                     <FaCodeBranch />
                     <div>
                       <span className="stat-value">{forksCount}</span>
-                      <span className="stat-label">Forks</span>
+                      <span className="stat-label">
+                        {t("works.modal.stats.forks")}
+                      </span>
                     </div>
                   </div>
                   <div className="stat-item">
                     <FaEye />
                     <div>
                       <span className="stat-value">{watchersCount}</span>
-                      <span className="stat-label">Watchers</span>
+                      <span className="stat-label">
+                        {t("works.modal.stats.watchers")}
+                      </span>
                     </div>
                   </div>
                   <div className="stat-item">
                     <FaCode />
                     <div>
                       <span className="stat-value">{openIssuesCount}</span>
-                      <span className="stat-label">Issues</span>
+                      <span className="stat-label">
+                        {t("works.modal.stats.issues")}
+                      </span>
                     </div>
                   </div>
                   <div className="stat-item">
@@ -230,16 +290,20 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       <span className="stat-value">
                         {githubService.formatFileSize(size * 1024)}
                       </span>
-                      <span className="stat-label">Tamaño</span>
+                      <span className="stat-label">
+                        {t("works.modal.stats.size")}
+                      </span>
                     </div>
                   </div>
                   <div className="stat-item">
                     <FaClock />
                     <div>
                       <span className="stat-value">
-                        {githubService.formatDate(updatedAt)}
+                        {formatRelativeUpdated(updatedAt, locale)}
                       </span>
-                      <span className="stat-label">Actualizado</span>
+                      <span className="stat-label">
+                        {t("works.modal.stats.updated")}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -247,7 +311,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 {/* Languages */}
                 {topLanguages.length > 0 && (
                   <div className="info-section">
-                    <h3>Lenguajes de programación</h3>
+                    <h3>{t("works.modal.languages")}</h3>
                     <div className="languages-detailed">
                       {topLanguages.map((lang) => (
                         <div key={lang.name} className="language-item">
@@ -285,7 +349,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 {/* Topics */}
                 {topics && topics.length > 0 && (
                   <div className="info-section">
-                    <h3>Topics</h3>
+                    <h3>{t("works.modal.topics")}</h3>
                     <div className="topics-list">
                       {topics.map((topic) => (
                         <span key={topic} className="topic-tag">
@@ -296,52 +360,14 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   </div>
                 )}
 
-                {/* Links */}
-                <div className="info-section">
-                  <h3>Enlaces</h3>
-                  <div className="project-links-detailed">
-                    <a
-                      href={htmlUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-button github"
-                    >
-                      <FaGithub />
-                      <span>Ver en GitHub</span>
-                    </a>
-                    {homepage && (
-                      <a
-                        href={homepage}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-button demo"
-                      >
-                        <FaExternalLinkAlt />
-                        <span>Ver Demo</span>
-                      </a>
-                    )}
-                    {hasPages && (
-                      <a
-                        href={`https://${fullName}.github.io`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-button pages"
-                      >
-                        <FaLink />
-                        <span>GitHub Pages</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-
                 {/* README */}
                 <div className="info-section">
-                  <h3>README</h3>
+                  <h3>{t("works.modal.readmeHeading")}</h3>
                   <div className="readme-container">
                     {isLoadingReadme ? (
                       <div className="readme-loading">
                         <div className="loading-spinner" />
-                        <span>Cargando README...</span>
+                        <span>{t("works.modal.readme.loading")}</span>
                       </div>
                     ) : readme ? (
                       <div className="readme-content">
@@ -350,7 +376,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     ) : (
                       <div className="readme-empty">
                         <FaInfoCircle />
-                        <span>No hay README disponible para este proyecto</span>
+                        <span>{t("works.modal.readme.empty")}</span>
                       </div>
                     )}
                   </div>

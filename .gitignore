@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.local
 
 # Ignorar archivos .md excepto README.md o readme.md
 !README.md

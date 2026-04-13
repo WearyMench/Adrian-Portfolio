@@ -1,165 +1,220 @@
 const GITHUB_API_BASE = "https://api.github.com";
 const USERNAME = "WearyMench";
 
+const MAX_RETRIES = 5;
+
 class GitHubService {
   constructor() {
     this.cache = new Map();
-    this.cacheExpiry = 5 * 60 * 1000; // 5 minutos
+    /** Successful API responses — reused past expiry when GitHub returns 403/429 */
+    this.cacheExpiry = 20 * 60 * 1000;
+    this.readmeCacheExpiry = 45 * 60 * 1000;
+    this.inflight = new Map();
+    this._lastLangFetchAt = 0;
   }
 
-  async fetchWithCache(url, cacheKey) {
+  _getAuthHeaders() {
+    const headers = {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    };
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    return headers;
+  }
+
+  _sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Wait time from GitHub rate-limit headers, with bounded exponential fallback.
+   */
+  _getRetryDelayMs(response, attempt) {
+    const retryAfter = response.headers.get("retry-after");
+    if (retryAfter) {
+      const sec = parseInt(retryAfter, 10);
+      if (!Number.isNaN(sec) && sec > 0) {
+        return Math.min(sec * 1000, 120_000);
+      }
+    }
+    const reset = response.headers.get("x-ratelimit-reset");
+    if (reset) {
+      const ms = parseInt(reset, 10) * 1000 - Date.now() + 2000;
+      if (ms > 0) return Math.min(ms, 3_600_000);
+    }
+    return Math.min(4000 * 2 ** (attempt - 1), 90_000);
+  }
+
+  _languageRequestGapMs() {
+    return import.meta.env.VITE_GITHUB_TOKEN ? 80 : 400;
+  }
+
+  async _throttleLanguageRequests() {
+    const gap = this._languageRequestGapMs();
+    const now = Date.now();
+    const last = this._lastLangFetchAt || 0;
+    const elapsed = now - last;
+    if (last > 0 && elapsed < gap) {
+      await this._sleep(gap - elapsed);
+    }
+    this._lastLangFetchAt = Date.now();
+  }
+
+  async fetchJsonWithCache(url, cacheKey) {
     const cached = this.cache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < this.cacheExpiry) {
+    const isFresh =
+      cached && Date.now() - cached.timestamp < this.cacheExpiry;
+
+    if (isFresh) {
       return cached.data;
     }
 
-    const maxRetries = 3;
     let lastError;
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
       try {
         const response = await fetch(url, {
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-            "User-Agent": "Adrian-Portfolio",
-          },
+          headers: this._getAuthHeaders(),
         });
 
-        if (!response.ok) {
-          if (response.status === 403) {
-            console.warn(
-              `GitHub API rate limit (attempt ${attempt}/${maxRetries}), waiting ${
-                attempt * 2
-              } seconds...`
-            );
-            await new Promise((resolve) => setTimeout(resolve, attempt * 2000));
-            lastError = new Error(`GitHub API rate limit: ${response.status}`);
-            continue; // Intentar de nuevo
-          }
-          throw new Error(`GitHub API error: ${response.status}`);
+        if (response.ok) {
+          const data = await response.json();
+          this.cache.set(cacheKey, {
+            data,
+            timestamp: Date.now(),
+          });
+          return data;
         }
 
-        const data = await response.json();
-        this.cache.set(cacheKey, {
-          data,
-          timestamp: Date.now(),
-        });
+        if (response.status === 403 || response.status === 429) {
+          if (cached) {
+            console.warn(
+              `[GitHub] ${response.status} — using cached data for ${cacheKey}`
+            );
+            return cached.data;
+          }
+          const wait = this._getRetryDelayMs(response, attempt);
+          console.warn(
+            `[GitHub] ${response.status} — retry ${attempt}/${MAX_RETRIES} in ${Math.round(wait / 1000)}s`
+          );
+          await this._sleep(wait);
+          continue;
+        }
 
-        return data;
-      } catch (error) {
-        console.error(
-          `Error fetching from GitHub API (attempt ${attempt}/${maxRetries}):`,
-          error
-        );
-        lastError = error;
+        if (cached) {
+          console.warn(
+            `[GitHub] HTTP ${response.status} — using cached data for ${cacheKey}`
+          );
+          return cached.data;
+        }
 
-        if (attempt < maxRetries) {
-          await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+        lastError = new Error(`GitHub API error: ${response.status}`);
+        break;
+      } catch (err) {
+        lastError = err;
+        if (cached) {
+          console.warn(
+            `[GitHub] Network error — using cached data for ${cacheKey}`,
+            err
+          );
+          return cached.data;
+        }
+        if (attempt < MAX_RETRIES) {
+          await this._sleep(1500 * attempt);
         }
       }
     }
 
-    throw lastError;
+    if (cached) {
+      return cached.data;
+    }
+
+    throw lastError || new Error("GitHub API: request failed");
+  }
+
+  _decodeReadmeContent(b64) {
+    const clean = b64.replace(/\s/g, "");
+    const binary = atob(clean);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new TextDecoder("utf-8").decode(bytes);
   }
 
   async getShowcaseRepositories() {
+    const inflightKey = "showcase-repos";
+    if (this.inflight.has(inflightKey)) {
+      return this.inflight.get(inflightKey);
+    }
+
+    const promise = this._loadShowcaseRepositories().finally(() => {
+      this.inflight.delete(inflightKey);
+    });
+    this.inflight.set(inflightKey, promise);
+    return promise;
+  }
+
+  async _loadShowcaseRepositories() {
     try {
-      // Obtener todos los repos públicos del usuario
-      const repos = await this.fetchWithCache(
+      const repos = await this.fetchJsonWithCache(
         `${GITHUB_API_BASE}/users/${USERNAME}/repos?sort=updated&per_page=100`,
         "user-repos"
       );
 
-      // Filtrar repos con topic "showcase"
       const showcaseRepos = [];
 
       for (const repo of repos) {
-        if (repo.topics && repo.topics.includes("showcase")) {
-          try {
-            // Agregar un pequeño delay entre peticiones para evitar rate limits
-            await new Promise((resolve) => setTimeout(resolve, 100));
-
-            // Obtener información adicional del repo
-            const repoDetails = await this.fetchWithCache(
-              `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}`,
-              `repo-${repo.name}`
-            );
-
-            // Obtener lenguajes del repo
-            const languages = await this.fetchWithCache(
-              `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}/languages`,
-              `languages-${repo.name}`
-            );
-
-            showcaseRepos.push({
-              id: repo.id,
-              name: repo.name,
-              fullName: repo.full_name,
-              description: repo.description,
-              htmlUrl: repo.html_url,
-              homepage: repo.homepage,
-              topics: repo.topics || [],
-              stargazersCount: repo.stargazers_count,
-              forksCount: repo.forks_count,
-              updatedAt: repo.updated_at,
-              createdAt: repo.created_at,
-              language: repo.language,
-              languages: languages,
-              hasIssues: repo.has_issues,
-              hasWiki: repo.has_wiki,
-              hasPages: repo.has_pages,
-              defaultBranch: repo.default_branch,
-              size: repo.size,
-              archived: repo.archived,
-              disabled: repo.disabled,
-              private: repo.private,
-              fork: repo.fork,
-              license: repo.license,
-              openIssuesCount: repo.open_issues_count,
-              watchersCount: repo.watchers_count,
-              networkCount: repoDetails.network_count,
-              subscribersCount: repoDetails.subscribers_count,
-            });
-          } catch (repoError) {
-            console.warn(
-              `Error fetching details for repo ${repo.name}:`,
-              repoError
-            );
-            // Si falla obtener detalles, usar solo la información básica del repo
-            showcaseRepos.push({
-              id: repo.id,
-              name: repo.name,
-              fullName: repo.full_name,
-              description: repo.description,
-              htmlUrl: repo.html_url,
-              homepage: repo.homepage,
-              topics: repo.topics || [],
-              stargazersCount: repo.stargazers_count,
-              forksCount: repo.forks_count,
-              updatedAt: repo.updated_at,
-              createdAt: repo.created_at,
-              language: repo.language,
-              languages: {},
-              hasIssues: repo.has_issues,
-              hasWiki: repo.has_wiki,
-              hasPages: repo.has_pages,
-              defaultBranch: repo.default_branch,
-              size: repo.size,
-              archived: repo.archived,
-              disabled: repo.disabled,
-              private: repo.private,
-              fork: repo.fork,
-              license: repo.license,
-              openIssuesCount: repo.open_issues_count,
-              watchersCount: repo.watchers_count,
-              networkCount: 0,
-              subscribersCount: 0,
-            });
-          }
+        if (!repo.topics || !repo.topics.includes("showcase")) {
+          continue;
         }
+
+        await this._throttleLanguageRequests();
+
+        let languages = {};
+        try {
+          languages = await this.fetchJsonWithCache(
+            `${GITHUB_API_BASE}/repos/${USERNAME}/${repo.name}/languages`,
+            `languages-${repo.name}`
+          );
+        } catch {
+          languages = repo.language ? { [repo.language]: 1 } : {};
+        }
+
+        showcaseRepos.push({
+          id: repo.id,
+          name: repo.name,
+          fullName: repo.full_name,
+          description: repo.description,
+          htmlUrl: repo.html_url,
+          homepage: repo.homepage,
+          topics: repo.topics || [],
+          stargazersCount: repo.stargazers_count,
+          forksCount: repo.forks_count,
+          updatedAt: repo.updated_at,
+          createdAt: repo.created_at,
+          language: repo.language,
+          languages,
+          hasIssues: repo.has_issues,
+          hasWiki: repo.has_wiki,
+          hasPages: repo.has_pages,
+          defaultBranch: repo.default_branch,
+          size: repo.size,
+          archived: repo.archived,
+          disabled: repo.disabled,
+          private: repo.private,
+          fork: repo.fork,
+          license: repo.license,
+          openIssuesCount: repo.open_issues_count,
+          watchersCount: repo.watchers_count,
+          networkCount: 0,
+          subscribersCount: 0,
+        });
       }
 
-      // Ordenar por fecha de actualización (más recientes primero)
       return showcaseRepos.sort(
         (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
       );
@@ -169,18 +224,52 @@ class GitHubService {
     }
   }
 
-  async getRepositoryReadme(repoName) {
-    try {
-      const readme = await this.fetchWithCache(
-        `${GITHUB_API_BASE}/repos/${USERNAME}/${repoName}/readme`,
-        `readme-${repoName}`
-      );
+  async getRepositoryReadme(repoName, defaultBranch = "main") {
+    const cacheKey = `readme-content-${repoName}`;
+    const cached = this.cache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < this.readmeCacheExpiry) {
+      return cached.data;
+    }
 
-      // Decodificar el contenido del README (está en base64)
-      return atob(readme.content);
+    const branches = [defaultBranch, "main", "master"].filter(
+      (b, i, arr) => Boolean(b) && arr.indexOf(b) === i
+    );
+
+    const paths = ["README.md", "readme.md", "Readme.md"];
+
+    for (const branch of branches) {
+      for (const path of paths) {
+        const rawUrl = `https://raw.githubusercontent.com/${USERNAME}/${repoName}/${branch}/${path}`;
+        try {
+          const res = await fetch(rawUrl);
+          if (res.ok) {
+            const text = await res.text();
+            this.cache.set(cacheKey, {
+              data: text,
+              timestamp: Date.now(),
+            });
+            return text;
+          }
+        } catch {
+          /* try next */
+        }
+      }
+    }
+
+    try {
+      const readme = await this.fetchJsonWithCache(
+        `${GITHUB_API_BASE}/repos/${USERNAME}/${repoName}/readme`,
+        `readme-api-${repoName}`
+      );
+      const text = this._decodeReadmeContent(readme.content);
+      this.cache.set(cacheKey, {
+        data: text,
+        timestamp: Date.now(),
+      });
+      return text;
     } catch (error) {
       console.error(`Error getting README for ${repoName}:`, error);
-      return null;
+      return cached ? cached.data : null;
     }
   }
 
@@ -250,12 +339,6 @@ class GitHubService {
       Gradle: "#02303a",
       Maven: "#C71A36",
       Ant: "#A9307E",
-      Gradle: "#02303a",
-      Maven: "#C71A36",
-      Ant: "#A9307E",
-      Gradle: "#02303a",
-      Maven: "#C71A36",
-      Ant: "#A9307E",
     };
 
     return colors[language] || "#586069";
@@ -269,20 +352,23 @@ class GitHubService {
 
     if (diffDays === 1) {
       return "Hoy";
-    } else if (diffDays === 2) {
+    }
+    if (diffDays === 2) {
       return "Ayer";
-    } else if (diffDays < 7) {
+    }
+    if (diffDays < 7) {
       return `Hace ${diffDays - 1} días`;
-    } else if (diffDays < 30) {
+    }
+    if (diffDays < 30) {
       const weeks = Math.floor(diffDays / 7);
       return `Hace ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
-    } else if (diffDays < 365) {
+    }
+    if (diffDays < 365) {
       const months = Math.floor(diffDays / 30);
       return `Hace ${months} ${months === 1 ? "mes" : "meses"}`;
-    } else {
-      const years = Math.floor(diffDays / 365);
-      return `Hace ${years} ${years === 1 ? "año" : "años"}`;
     }
+    const years = Math.floor(diffDays / 365);
+    return `Hace ${years} ${years === 1 ? "año" : "años"}`;
   }
 
   formatFileSize(bytes) {

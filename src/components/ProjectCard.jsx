@@ -1,9 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { FaStar, FaCodeBranch, FaEye, FaCalendarAlt } from "react-icons/fa";
 import githubService from "../services/githubService";
+import { formatRelativeUpdated } from "../utils/formatRelativeDate";
 
 const ProjectCard = ({ project, index, onOpenModal }) => {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage || i18n.language || "en";
   const {
     name,
     description,
@@ -110,7 +114,7 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
 
       {/* Description */}
       <p className="project-description">
-        {description || "Sin descripción disponible"}
+        {description || t("works.project.description")}
       </p>
 
       {/* Languages */}
@@ -161,15 +165,19 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
       <div className="project-footer">
         <div className="project-updated">
           <FaCalendarAlt />
-          <span title={new Date(updatedAt).toLocaleDateString()}>
-            {githubService.formatDate(updatedAt)}
+          <span
+            title={new Date(updatedAt).toLocaleDateString(locale, {
+              dateStyle: "medium",
+            })}
+          >
+            {formatRelativeUpdated(updatedAt, locale)}
           </span>
         </div>
       </div>
 
       {/* Hover overlay */}
       <div className="project-overlay">
-        <span>Ver proyecto</span>
+        <span>{t("works.project.viewProject")}</span>
       </div>
     </motion.div>
   );

@@ -71,7 +71,7 @@ const ProjectFilters = ({
             <button
               onClick={() => setFilters((prev) => ({ ...prev, search: "" }))}
               className="clear-search"
-              aria-label="Limpiar búsqueda"
+              aria-label={t("works.filters.clearSearch")}
             >
               <FaTimes />
             </button>
@@ -108,7 +108,9 @@ const ProjectFilters = ({
                 ))}
                 {availableLanguages.length > 8 && (
                   <span className="more-indicator">
-                    +{availableLanguages.length - 8} más
+                    {t("works.filters.moreCount", {
+                      count: availableLanguages.length - 8,
+                    })}
                   </span>
                 )}
               </div>
@@ -133,7 +135,9 @@ const ProjectFilters = ({
                 ))}
                 {availableTopics.length > 6 && (
                   <span className="more-indicator">
-                    +{availableTopics.length - 6} más
+                    {t("works.filters.moreCount", {
+                      count: availableTopics.length - 6,
+                    })}
                   </span>
                 )}
               </div>
@@ -171,7 +175,9 @@ const ProjectFilters = ({
       {/* Active Filters Display */}
       {hasActiveFilters && (
         <div className="active-filters">
-          <span className="active-filters-label">Filtros activos:</span>
+          <span className="active-filters-label">
+            {t("works.filters.activeLabel")}
+          </span>
           {filters.search && (
             <span className="active-filter">
               "{filters.search}"

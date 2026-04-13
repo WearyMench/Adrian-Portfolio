@@ -25,12 +25,12 @@
     "timeline": {
       "title": "My Journey",
       "webDev": {
-        "period": "2022-2025",
+        "period": "2022–present",
         "title": "Web Developer",
         "description": "Personal projects and collaborations on GitHub"
       },
       "analyst": {
-        "period": "2023-2025",
+        "period": "2023–present",
         "title": "Systems Analyst",
         "description": "Software maintenance analyst"
       }
@@ -95,6 +95,9 @@
       "topics": "Topics",
       "sort": "Sort by",
       "clear": "Clear filters",
+      "clearSearch": "Clear search",
+      "activeLabel": "Active filters:",
+      "moreCount": "+{{count}} more",
       "results": "project found",
       "results_plural": "projects found"
     },
@@ -102,6 +105,7 @@
       "updated": "Most recent",
       "created": "Oldest",
       "stars": "Most stars",
+      "forks": "Most forks",
       "name": "Alphabetical"
     },
     "pagination": {
@@ -129,8 +133,8 @@
       "description": "Description",
       "languages": "Programming languages",
       "topics": "Topics",
-      "links": "Links",
-      "readme": "README",
+      "linksSectionTitle": "Links",
+      "readmeHeading": "README",
       "stats": {
         "stars": "Stars",
         "forks": "Forks",
@@ -142,7 +146,10 @@
       "badges": {
         "archived": "Archived",
         "fork": "Fork",
-        "license": "License"
+        "license": "License",
+        "archivedTitle": "Archived repository",
+        "forkTitle": "Fork of another repository",
+        "licenseTitle": "License: {{name}}"
       },
       "links": {
         "github": "View on GitHub",
